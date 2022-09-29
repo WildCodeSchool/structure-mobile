@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import SignUp from "../components/SignUp";
 
 import { Text, View } from "../components/Themed";
 //S'INSCRIRE
@@ -11,6 +12,7 @@ export default function SignUpcreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+      {/* <SignUp /> */}
     </View>
   );
 }

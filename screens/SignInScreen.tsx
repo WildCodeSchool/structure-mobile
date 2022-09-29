@@ -2,6 +2,7 @@ import { StyleSheet, Image } from "react-native";
 import logo from "../assets/images/logo.svg";
 
 import EditScreenInfo from "../components/EditScreenInfo";
+import SignUp from "../components/SignUp";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
@@ -17,7 +18,7 @@ export default function SignInScreen({
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Image source={logo} style={styles.logo} resizeMode="contain" />
+      {/* <SignUp /> */}
     </View>
   );
 }
