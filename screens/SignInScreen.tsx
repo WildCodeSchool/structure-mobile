@@ -1,22 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
+import logo from "../assets/images/logo.svg";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
+import { RootTabScreenProps } from "../types";
 
-export default function ModalScreen() {
+//S'IDENTIFIER
+export default function SignInScreen({
+  navigation,
+}: RootTabScreenProps<"SignIn">) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ticket</Text>
+      <Text style={styles.title}>Structure</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="/screens/ModalScreen.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+      <Image source={logo} style={styles.logo} resizeMode="contain" />
     </View>
   );
 }
@@ -35,5 +36,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  logo: {
+    width: 100,
+    height: 50,
+    maxWidth: 300,
   },
 });
