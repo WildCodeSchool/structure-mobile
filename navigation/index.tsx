@@ -19,13 +19,16 @@ import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import DashboardScreen from "../screens/DashboardScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import SignInScreen from "../screens/SignInScreen";
+import SplashScreen from "../screens/SplashScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
 export default function Navigation({
   colorScheme,
@@ -51,6 +54,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
@@ -108,8 +114,8 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Profil"
-        component={TabTwoScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           title: "Profil",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,

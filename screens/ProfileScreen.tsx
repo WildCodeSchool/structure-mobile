@@ -1,23 +1,15 @@
-import { StyleSheet, Image } from "react-native";
-import logo from "../assets/images/logo.svg";
-
-import EditScreenInfo from "../components/EditScreenInfo";
+import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
 
-//S'IDENTIFIER
-export default function SignInScreen({
-  navigation,
-}: RootTabScreenProps<"SignIn">) {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Se connecter</Text>
+      <Text style={styles.title}>Profile</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Image source={logo} style={styles.logo} resizeMode="contain" />
     </View>
   );
 }
@@ -36,10 +28,5 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
-  },
-  logo: {
-    width: 100,
-    height: 50,
-    maxWidth: 300,
   },
 });

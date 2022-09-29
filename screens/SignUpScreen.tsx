@@ -5,7 +5,7 @@ import { Text, View } from "../components/Themed";
 export default function SignUpcreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>S'incrire</Text>
+      <Text style={styles.title}>S'inscrire</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
