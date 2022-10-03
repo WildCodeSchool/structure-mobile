@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+<<<<<<< HEAD
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -31,6 +32,10 @@ const client = new ApolloClient({
 });
 // import { SecureStore } from "expo";
 import { ApolloProvider } from "@apollo/client";
+=======
+import { ApolloProvider } from "@apollo/react-hooks";
+import { client } from "./apollo/config";
+>>>>>>> 2f2eba4 (Add react navigation, apollo client and graphql)
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
