@@ -1,46 +1,63 @@
-import { StyleSheet, Image } from "react-native";
-import logo from "../assets/images/logo.svg";
+import { Text, View } from "react-native";
+import { InputGroup } from "../components/InputGroup";
+import { Button } from "../components/Button";
+import { useForm, Controller } from "react-hook-form";
 
-import EditScreenInfo from "../components/EditScreenInfo";
-import SignUp from "../components/SignUp";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+export const SignInScreen = ({}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-//S'IDENTIFIER
-export default function SignInScreen({
-  navigation,
-}: RootTabScreenProps<"SignIn">) {
+  function onSubmit(data: any) {
+    console.log(data);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Se connecter</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+    <View>
+      <Text>Se connecter</Text>
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="votre email"
+          />
+        )}
+        name="email"
       />
-      {/* <SignUp /> */}
+      {errors.email && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="votre password"
+          />
+        )}
+        name="password"
+      />
+      {errors.password && <Text>This is required.</Text>}
+
+      <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  logo: {
-    width: 100,
-    height: 50,
-    maxWidth: 300,
-  },
-});
+};

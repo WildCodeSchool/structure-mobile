@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignInScreen from "../screens/SignInScreen";
+import { SignInScreen } from "../screens/SignInScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
-import SignUpScreen from "../screens/SignUpScreen";
+import { SignUpScreen } from "../screens/SignUpScreen";
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
@@ -33,12 +33,12 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Welcome"
+        name="IsNotSignedIn"
         component={WelcomeNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Main"
+        name="IsSignedIn"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
@@ -64,12 +64,12 @@ function WelcomeNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="SignIn"
+        name="Login"
         component={SignInScreen}
         options={{ title: "Bon retour parmis nous" }}
       />
       <Stack.Screen
-        name="SignUp"
+        name="Register"
         component={SignUpScreen}
         options={{ title: "Inscrivez-vous" }}
       />

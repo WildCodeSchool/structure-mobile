@@ -1,35 +1,55 @@
-import { StyleSheet } from "react-native";
-import SignUp from "../components/SignUp";
+import React, { useState } from "react";
+import { ScrollView, Text, View } from "react-native";
+import { InputGroup } from "../components/InputGroup";
+import { Button } from "../components/Button";
 
-import { Text, View } from "../components/Themed";
-//S'INSCRIRE
-export default function SignUpcreen() {
+interface CreateAccountProps {}
+
+export const SignUpScreen: React.FunctionComponent<
+  CreateAccountProps
+> = ({}) => {
+  const signup = () => {
+    console.log("Create account here...");
+  };
+
+  const [firstName, setFirstName] = useState("");
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>S'inscrire</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+    <>
+      <Text>Création de compte</Text>
+      <InputGroup
+        label="Prénom"
+        value={firstName}
+        placeholder="Prénom"
+        onChangeText={setFirstName}
       />
-      {/* <SignUp /> */}
-    </View>
+      <InputGroup
+        label="Nom"
+        value={firstName}
+        placeholder="Nom"
+        onChangeText={setFirstName}
+      />
+      <InputGroup
+        label="Email"
+        value={firstName}
+        placeholder="mail"
+        onChangeText={setFirstName}
+        type="email-address"
+      />
+      <InputGroup
+        label="Mot de passe"
+        value={firstName}
+        onChangeText={setFirstName}
+        password
+      />
+      <InputGroup
+        label="Confirmation de mot de passe"
+        value={firstName}
+        onChangeText={setFirstName}
+        password
+      />
+      <View />
+      <Button onPress={signup}>Créer mon compte</Button>
+    </>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
+};

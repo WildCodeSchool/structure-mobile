@@ -18,10 +18,11 @@ declare global {
 
 //Paramètres de "RootNavigator"
 export type RootStackParamList = {
+  IsNotSignedIn: undefined;
+  IsSignedIn: NavigatorScreenParams<RootTabParamList> | { userId: string };
   Welcome: undefined;
-  SignIn: undefined;
-  SignUp: undefined;
-  Main: NavigatorScreenParams<RootTabParamList> | { userId: string };
+  Login: undefined;
+  Register: undefined;
   Dashboard: undefined;
   Modal: undefined;
   NotFound: undefined;

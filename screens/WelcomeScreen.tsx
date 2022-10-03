@@ -20,12 +20,12 @@ export default function WelcomeScreen({
         <Button
           //style={styles.buttonPrimary}
           title="Se connecter"
-          onPress={() => navigation.navigate("SignIn")}
+          onPress={() => navigation.navigate("Login")}
         />
         <Button
           //style={styles.button}
           title="S'inscrire"
-          onPress={() => navigation.navigate("SignUp")}
+          onPress={() => navigation.navigate("Register")}
         />
       </View>
     </View>
