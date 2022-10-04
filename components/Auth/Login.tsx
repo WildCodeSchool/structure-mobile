@@ -1,20 +1,18 @@
-import { Text, View } from "react-native";
-import { InputGroup } from "../components/InputGroup";
-import { Button } from "../components/Button";
+import * as React from "react";
+import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
+import Constants from "expo-constants";
+import { InputGroup } from "../InputGroup";
+import { Button } from "../Button";
 import { useForm, Controller } from "react-hook-form";
-import { LOGIN_MUTATION } from "../apollo/queries";
+import { LOGIN_MUTATION } from "../../apollo/queries";
 import { useMutation } from "@apollo/client";
-
-export const SignInScreen = ({}) => {
+export default function Login() {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
   const [mutateLogin, { data, loading, error: ApolloError }] =
     useMutation(LOGIN_MUTATION);
@@ -35,8 +33,6 @@ export const SignInScreen = ({}) => {
 
   return (
     <View>
-      <Text>Se connecter</Text>
-
       <Controller
         control={control}
         rules={{
@@ -74,4 +70,4 @@ export const SignInScreen = ({}) => {
       <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
     </View>
   );
-};
+}

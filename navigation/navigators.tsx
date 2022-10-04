@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SignInScreen } from "../screens/SignInScreen";
+import LoginScreen from "../screens/LoginScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
-import { SignUpScreen } from "../screens/SignUpScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
@@ -18,8 +18,11 @@ import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
+  AuthContextType,
 } from "../types";
-
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -29,23 +32,40 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 //Routeur d'identification "signIn or not signIn"
 export default function RootNavigator() {
+  const { signedIn, setSignedIn } = useContext(AuthContext) as AuthContextType;
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        console.log("🚀 ~ token", token);
+        token ? setSignedIn(true) : setSignedIn(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, [signedIn]);
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="IsNotSignedIn">
+      {signedIn === false ? (
+        <Stack.Screen
+          name="IsNotSignedIn"
+          component={WelcomeNavigator}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen
+          name="IsSignedIn"
+          component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+      )}
       <Stack.Screen
-        name="IsNotSignedIn"
-        component={WelcomeNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="IsSignedIn"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      {/* <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
-      /> */}
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -64,12 +84,12 @@ function WelcomeNavigator() {
       />
       <Stack.Screen
         name="Login"
-        component={SignInScreen}
+        component={LoginScreen}
         options={{ title: "Bon retour parmis nous" }}
       />
       <Stack.Screen
         name="Register"
-        component={SignUpScreen}
+        component={RegisterScreen}
         options={{ title: "Inscrivez-vous" }}
       />
     </Stack.Navigator>
@@ -97,7 +117,7 @@ function BottomTabNavigator() {
         component={DashboardStack}
         options={({ navigation }: RootTabScreenProps<"Dashboard">) => ({
           title: "Tableau de bord",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Modal")}
@@ -115,13 +135,21 @@ function BottomTabNavigator() {
           ),
         })}
       />
+      <BottomTab.Screen
+        name="Projects"
+        component={ProfileScreen}
+        options={{
+          title: "Mes projets",
+          tabBarIcon: ({ color }) => <TabBarIcon name="trello" color={color} />,
+        }}
+      />
 
       <BottomTab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           title: "Profil",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
         }}
       />
     </BottomTab.Navigator>
