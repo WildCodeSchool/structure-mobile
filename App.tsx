@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "@apollo/client/link/context";
+import { client } from "./apollo/config";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -28,6 +29,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(httpLink),
 });
+// import { SecureStore } from "expo";
+import { ApolloProvider } from "@apollo/client";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

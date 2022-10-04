@@ -2,6 +2,8 @@ import { Text, View } from "react-native";
 import { InputGroup } from "../components/InputGroup";
 import { Button } from "../components/Button";
 import { useForm, Controller } from "react-hook-form";
+import { LOGIN_MUTATION } from "../apollo/queries";
+import { useMutation } from "@apollo/client";
 
 export const SignInScreen = ({}) => {
   const {
@@ -14,10 +16,22 @@ export const SignInScreen = ({}) => {
       password: "",
     },
   });
+  const [mutateLogin, { data, loading, error: ApolloError }] =
+    useMutation(LOGIN_MUTATION);
 
-  function onSubmit(data: any) {
-    console.log(data);
-  }
+  const onSubmit = handleSubmit((payload) => {
+    mutateLogin({
+      variables: {
+        data: payload,
+      },
+    })
+      .then((data) => {
+        if (data) {
+          console.log(data);
+        }
+      })
+      .catch((err) => console.log(err));
+  });
 
   return (
     <View>
