@@ -44,8 +44,6 @@ export default function Login() {
       .catch((err) => console.log(err));
   };
 
-  // const onSubmit = (data: any) => console.log(data);
-
   return (
     <View>
       <Controller
@@ -75,6 +73,7 @@ export default function Login() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            password= {true}
             placeholder="votre password"
           />
         )}
