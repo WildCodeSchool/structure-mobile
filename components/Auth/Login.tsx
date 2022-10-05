@@ -5,13 +5,19 @@ import { Button } from "../Button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { LOGIN_MUTATION } from "../../apollo/queries";
 import { useMutation } from "@apollo/client";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { RootTabParamList, AuthContextType } from "../../types";
 
 interface ILoginFormData {
-	email: string
-	password: string
+  email: string;
+  password: string;
 }
 
 export default function Login() {
+  const navigation = useNavigation<RootTabParamList>();
   const {
     control,
     handleSubmit,
@@ -21,8 +27,8 @@ export default function Login() {
   });
   const [mutateLogin, { data, loading, error: ApolloError }] =
     useMutation(LOGIN_MUTATION);
-
-  const onSubmit:SubmitHandler<ILoginFormData>  = ((payload) => {
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
+  const onSubmit: SubmitHandler<ILoginFormData> = (payload) => {
     mutateLogin({
       variables: {
         data: payload,
@@ -30,11 +36,13 @@ export default function Login() {
     })
       .then((data) => {
         if (data) {
-          console.log(data);
+          AsyncStorage.setItem("token", data.data.login);
+          setSignedIn(true);
+          navigation.navigate("IsSignedIn");
         }
       })
       .catch((err) => console.log(err));
-  });
+  };
 
   // const onSubmit = (data: any) => console.log(data);
 

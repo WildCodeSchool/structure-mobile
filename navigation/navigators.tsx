@@ -107,16 +107,16 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="Dashboard"
+        name="Home"
         component={DashboardStack}
-        options={({ navigation }: RootTabScreenProps<"Dashboard">) => ({
-          title: "Tableau de bord",
+        options={({ navigation }: RootTabScreenProps<"Home">) => ({
+          title: "Structure",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
@@ -169,9 +169,21 @@ function TabBarIcon(props: {
 function DashboardStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
-      <Stack.Screen name="Project_details" component={ProjectScreen} />
-      <Stack.Screen name="Ticket_details" component={TicketScreen} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Dashboard"
+        component={DashboardScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Project_details"
+        component={ProjectScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Ticket_details"
+        component={TicketScreen}
+      />
     </Stack.Navigator>
   );
 }
