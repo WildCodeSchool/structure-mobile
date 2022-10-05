@@ -23,6 +23,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   Register: undefined;
+  Home: undefined;
   Dashboard: undefined;
   Modal: undefined;
   NotFound: undefined;
@@ -35,7 +36,8 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 //Paramètres de "BottomTab"
 export type RootTabParamList = {
-  Dashboard: undefined;
+  navigate(arg0: string): unknown;
+  Home: undefined;
   Projects: { userId: string };
   Profile: { userId: string };
 };
