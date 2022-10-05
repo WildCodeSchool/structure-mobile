@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
 
@@ -12,7 +12,6 @@ export default function Register() {
 
   return (
     <>
-      <Text>Créer un nouveau compte</Text>
       <InputGroup
         label="Prénom"
         value={firstName}

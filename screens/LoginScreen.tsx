@@ -4,7 +4,7 @@ import Login from "../components/Auth/Login";
 export default function LoginScreen() {
   return (
     <View>
-      <Text>Connexion</Text>
+      <Text>Bon retour parmis nous</Text>
       <Login />
     </View>
   );
