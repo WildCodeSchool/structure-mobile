@@ -1,50 +1,181 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import * as React from "react";
+import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { REGISTER_USER } from "../../apollo/queries";
+import { useMutation } from "@apollo/client";
 
-export default function Register() {
-  const signup = () => {
-    console.log("Create account here...");
-  };
+interface IRegisterFormData {
+	firstname: string
+	lastname: string
+	email: string
+	password: string
+	confirmPassword: string
+}
 
-  const [firstName, setFirstName] = useState("");
+export default function RegisterForm() {
+	//Form
+	const {
+		register,
+    control,
+		handleSubmit,
+		watch,
+		formState: { errors }
+	} = useForm<IRegisterFormData>({ mode: 'onTouched' })
+
+
+	const minLength = {
+		firstName: 2,
+		lastnameInvalid: 2,
+		emailInvalid: 5,
+		password: 8,
+		confirmpassword:8 
+	}
+
+	const regex = {
+		firstname: /^[a-z ,.'-]+$/i,
+		lastname: /^[a-z ,.'-]+$/i,
+		email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+	}
+	
+	const errorMessages = {
+		firstName: "Prénom requis",
+		lastnameInvalid: "Nom requis",
+		emailInvalid: "Email invalide",
+		password: "password invalide",
+		confirmPassword:"les passwords ne correspondent pas"  
+	}
+
+
+
+
+	//Mutation
+	const [mutateRegister, { loading, error: ApolloError }] =
+		useMutation(REGISTER_USER)
+
+
+	const onSubmit: SubmitHandler<IRegisterFormData> =  (data => {
+		// on enlève confirmPassword de l'objet data
+		const { confirmPassword, ...rest } = data
+
+		const response = mutateRegister({ variables: { data: rest } })
+		response
+			.then(data => {
+				if (data) {
+					console.log(data.data.register)
+					localStorage.setItem('token', data.data.register)
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	})
+
 
   return (
-    <>
-      <InputGroup
-        label="Prénom"
-        value={firstName}
-        placeholder="Prénom"
-        onChangeText={setFirstName}
+    <View>
+      <Controller
+        control={control}
+        rules={{
+          required: { value: true, message: errorMessages.firstName },
+          pattern: { message: "Not a Valid Name", value: regex.firstname },
+					minLength: {message:"",value:minLength.firstName}
+					
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+					<InputGroup
+					onBlur={onBlur}
+					onChangeText={onChange}
+					value={value}
+					placeholder="votre prénom"
+				/>
+        )}
+        name="firstname"
       />
-      <InputGroup
-        label="Nom"
-        value={firstName}
-        placeholder="Nom"
-        onChangeText={setFirstName}
+      {errors.firstname && <Text>This is required.</Text>}
+
+
+
+			<Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="votre nom"
+          />
+        )}
+        name="lastname"
       />
-      <InputGroup
-        label="Email"
-        value={firstName}
-        placeholder="mail"
-        onChangeText={setFirstName}
-        type="email-address"
+      {errors.lastname && <Text>This is required.</Text>}
+
+
+			<Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="votre email"
+          />
+        )}
+        name="email"
       />
-      <InputGroup
-        label="Mot de passe"
-        value={firstName}
-        onChangeText={setFirstName}
-        password
+      {errors.email && <Text>This is required.</Text>}
+
+
+
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+						password= {true}
+            placeholder="votre password"
+          />
+        )}
+        name="password"
       />
-      <InputGroup
-        label="Confirmation de mot de passe"
-        value={firstName}
-        onChangeText={setFirstName}
-        password
+      {errors.password && <Text>This is required.</Text>}
+
+
+
+			<Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InputGroup
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+						password= {true}
+            placeholder="confirmez votre password"
+          />
+        )}
+        name="confirmPassword"
       />
-      <View />
-      <Button onPress={signup}>Créer mon compte</Button>
-    </>
+      {errors.confirmPassword && <Text>This is required.</Text>}
+
+
+
+      <Button onPress={handleSubmit(onSubmit)}>S'inscrire</Button>
+    </View>
   );
 }
