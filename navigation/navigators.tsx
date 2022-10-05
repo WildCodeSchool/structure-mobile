@@ -85,12 +85,12 @@ function WelcomeNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "Bon retour parmis nous" }}
+        options={{ title: "Connexion" }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ title: "Inscrivez-vous" }}
+        options={{ title: "Inscription" }}
       />
     </Stack.Navigator>
   );
