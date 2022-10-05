@@ -1,11 +1,16 @@
 import * as React from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
-import Constants from "expo-constants";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { LOGIN_MUTATION } from "../../apollo/queries";
 import { useMutation } from "@apollo/client";
+
+interface ILoginFormData {
+	email: string
+	password: string
+}
+
 export default function Login() {
   const {
     control,
@@ -17,7 +22,7 @@ export default function Login() {
   const [mutateLogin, { data, loading, error: ApolloError }] =
     useMutation(LOGIN_MUTATION);
 
-  const onSubmit = handleSubmit((payload) => {
+  const onSubmit:SubmitHandler<ILoginFormData>  = ((payload) => {
     mutateLogin({
       variables: {
         data: payload,
@@ -30,6 +35,8 @@ export default function Login() {
       })
       .catch((err) => console.log(err));
   });
+
+  // const onSubmit = (data: any) => console.log(data);
 
   return (
     <View>
