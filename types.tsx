@@ -3,9 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 declare global {
   namespace ReactNavigation {
@@ -13,23 +16,40 @@ declare global {
   }
 }
 
+//Paramètres de "RootNavigator"
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  IsNotSignedIn: undefined;
+  IsSignedIn: NavigatorScreenParams<RootTabParamList> | { userId: string };
+  Welcome: undefined;
+  Login: undefined;
+  Register: undefined;
+  Dashboard: undefined;
   Modal: undefined;
   NotFound: undefined;
+  Project_details: undefined;
+  Ticket_details: undefined;
 };
+//Props des Screen de "RootNavigator"
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, Screen>;
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
-
+//Paramètres de "BottomTab"
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Dashboard: undefined;
+  Projects: { userId: string };
+  Profile: { userId: string };
 };
+//Props des screen "BottomTab"
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+//Le CONTEXT
+export type Auth = boolean;
+
+export type AuthContextType = {
+  signedIn: Auth;
+  setSignedIn: (signedIn: Auth) => void;
+};
