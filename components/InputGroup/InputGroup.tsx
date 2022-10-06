@@ -12,6 +12,7 @@ interface InputGroupProps {
   placeholder?: string;
   value: string;
   password?: boolean;
+  validator?: any
   type?: KeyboardTypeOptions;
   onChangeText: (value: string) => void;
   onBlur?: () => void;
@@ -22,6 +23,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
   placeholder,
   value,
   password,
+  validator,
   type = "default",
   onChangeText,
   onBlur,
