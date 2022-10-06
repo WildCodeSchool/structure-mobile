@@ -1,10 +1,15 @@
 import * as React from "react";
-import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
+import { Text, View, StyleSheet, TextInput, Alert, } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler,UseFormRegister } from "react-hook-form";
 import { REGISTER_USER } from "../../apollo/queries";
 import { useMutation } from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { AuthContextType, RootTabParamList } from "../../types";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 interface IRegisterFormData {
 	firstname: string
@@ -12,6 +17,7 @@ interface IRegisterFormData {
 	email: string
 	password: string
 	confirmPassword: string
+  register: UseFormRegister<any>
 }
 
 export default function RegisterForm() {
@@ -23,7 +29,8 @@ export default function RegisterForm() {
 		watch,
 		formState: { errors }
 	} = useForm<IRegisterFormData>({ mode: 'onTouched' })
-
+  const navigation = useNavigation<RootTabParamList>();
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
 
 	const minLength = {
 		firstName: 2,
@@ -44,7 +51,7 @@ export default function RegisterForm() {
 		lastnameInvalid: "Nom requis",
 		emailInvalid: "Email invalide",
 		password: "password invalide",
-		confirmPassword:"les passwords ne correspondent pas"  
+		confirmPassword:"les passwords ne correspondent pas" 
 	}
 
 
@@ -58,13 +65,15 @@ export default function RegisterForm() {
 	const onSubmit: SubmitHandler<IRegisterFormData> =  (data => {
 		// on enlève confirmPassword de l'objet data
 		const { confirmPassword, ...rest } = data
-
+		
 		const response = mutateRegister({ variables: { data: rest } })
 		response
 			.then(data => {
 				if (data) {
 					console.log(data.data.register)
-					localStorage.setItem('token', data.data.register)
+					AsyncStorage.setItem('token', data.data.register)
+          setSignedIn(true);
+					navigation.navigate("IsSignedIn");
 				}
 			})
 			.catch(err => {
@@ -79,8 +88,8 @@ export default function RegisterForm() {
         control={control}
         rules={{
           required: { value: true, message: errorMessages.firstName },
-          pattern: { message: "Not a Valid Name", value: regex.firstname },
-					minLength: {message:"",value:minLength.firstName}
+          pattern: { message: 'Le prénom doit comporter uniquement des lettres', value: regex.firstname },
+					minLength: {message:'Le prénom doit faire au moins 2 caractères',value:minLength.firstName}
 					
         }}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -93,7 +102,7 @@ export default function RegisterForm() {
         )}
         name="firstname"
       />
-      {errors.firstname && <Text>This is required.</Text>}
+      {errors.firstname?.message}
 
 
 
@@ -108,11 +117,12 @@ export default function RegisterForm() {
             onChangeText={onChange}
             value={value}
             placeholder="votre nom"
+						
           />
         )}
         name="lastname"
       />
-      {errors.lastname && <Text>This is required.</Text>}
+      {errors.firstname?.message}
 
 
 			<Controller
@@ -130,7 +140,7 @@ export default function RegisterForm() {
         )}
         name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
+      {errors.email && <Text>Votre email est requis.</Text>}
 
 
 
@@ -151,7 +161,7 @@ export default function RegisterForm() {
         )}
         name="password"
       />
-      {errors.password && <Text>This is required.</Text>}
+      {errors.password && <Text>Le mot de passe est requis</Text>}
 
 
 
@@ -171,7 +181,7 @@ export default function RegisterForm() {
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && <Text>This is required.</Text>}
+      {errors.confirmPassword && <Text>La confirmation mot de passe est requise.</Text>}
 
 
 
