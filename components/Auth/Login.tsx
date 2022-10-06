@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { RootTabParamList, AuthContextType } from "../../types";
 
+
 interface ILoginFormData {
   email: string;
   password: string;
@@ -18,6 +19,26 @@ interface ILoginFormData {
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
+
+	const validators: any = {
+		email: {
+			required: {
+				value: true,
+				message: "L'email est requis"
+			},
+			pattern: {
+				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+				message: 'Adresse email non valide'
+			}
+		},
+		password: {
+			required: {
+				value: true,
+				message: 'Le mot de passe est requis'
+			}
+		}
+	}
+
   const {
     control,
     handleSubmit,
@@ -48,9 +69,9 @@ export default function Login() {
     <View>
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={
+          validators.email
+        }
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -61,13 +82,13 @@ export default function Login() {
         )}
         name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
+      {errors.email?.message && <Text>{errors.email?.message}</Text>}
 
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={
+          validators.password
+        }
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -75,11 +96,12 @@ export default function Login() {
             value={value}
             password= {true}
             placeholder="votre password"
+            validator={validators}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>This is required.</Text>}
+      {errors.password && <Text>{errors.password?.message}</Text>}
 
       <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
     </View>

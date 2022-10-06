@@ -17,41 +17,89 @@ interface IRegisterFormData {
 	email: string
 	password: string
 	confirmPassword: string
-  register: UseFormRegister<any>
+  
 }
 
 export default function RegisterForm() {
 	//Form
 	const {
-		register,
     control,
 		handleSubmit,
 		watch,
 		formState: { errors }
 	} = useForm<IRegisterFormData>({ mode: 'onTouched' })
+  
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
 
-	const minLength = {
-		firstName: 2,
-		lastnameInvalid: 2,
-		emailInvalid: 5,
-		password: 8,
-		confirmpassword:8 
-	}
 
-	const regex = {
-		firstname: /^[a-z ,.'-]+$/i,
-		lastname: /^[a-z ,.'-]+$/i,
-		email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-	}
-	
-	const errorMessages = {
-		firstName: "Prénom requis",
-		lastnameInvalid: "Nom requis",
-		emailInvalid: "Email invalide",
-		password: "password invalide",
-		confirmPassword:"les passwords ne correspondent pas" 
+  const validators = {
+		firstname: {
+			required: {
+				value: true,
+				message: 'Le prénom est requis'
+			},
+			pattern: {
+				value: /[A-Za-z]$/g,
+				message: 'Le prénom doit comporter uniquement des lettres'
+			},
+			minLength: {
+				value: 2,
+				message: 'Le prénom doit faire au moins 2 caractères'
+			}
+		},
+		lastname: {
+			required: {
+				value: true,
+				message: 'Le nom est requis'
+			},
+			pattern: {
+				value: /[A-Za-z]$/g,
+				message: 'Le nom doit comporter uniquement des lettres'
+			},
+			minLength: {
+				value: 2,
+				message: 'Le nom doit faire au moins 2 caractères'
+			}
+		},
+		email: {
+			required: {
+				value: true,
+				message: "L'email est requis"
+			},
+			pattern: {
+				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+				message: 'Adresse email non valide'
+			}
+		},
+		password: {
+			required: {
+				value: true,
+				message: 'Le mot de passe est requis'
+			},
+			minLength: {
+				value: 8,
+				message: 'Le mot de passe doit contenir au moins 8 caractères.'
+			},
+			maxLength: {
+				value: 20,
+				message: 'Le mot de passe ne doit pas dépasser 20 caractères.'
+			}
+		},
+		confirmPassword: {
+			required: {
+				value: true,
+				message: 'La confirmation mot de passe est requise'
+			},
+			minLength: {
+				value: 8,
+				message: 'Le mot de passe doit contenir au moins 8 caractères.'
+			},
+			
+			validate: (value: string) => value === watch('password'),
+			message: 'Les mots de passe ne correspondent pas'	
+		
+		}
 	}
 
 
@@ -85,14 +133,11 @@ export default function RegisterForm() {
   return (
     <View>
       <Controller
-        control={control}
-        rules={{
-          required: { value: true, message: errorMessages.firstName },
-          pattern: { message: 'Le prénom doit comporter uniquement des lettres', value: regex.firstname },
-					minLength: {message:'Le prénom doit faire au moins 2 caractères',value:minLength.firstName}
-					
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
+     control={control}
+     rules={
+			validators.firstname
+		}
+        render={({ field: { onChange, onBlur, value, } }) => (
 					<InputGroup
 					onBlur={onBlur}
 					onChangeText={onChange}
@@ -102,15 +147,15 @@ export default function RegisterForm() {
         )}
         name="firstname"
       />
-      {errors.firstname?.message}
+      {errors.firstname && <Text>{errors.firstname?.message}</Text>}
 
 
 
 			<Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+				rules={
+					validators.lastname
+				}
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -122,14 +167,14 @@ export default function RegisterForm() {
         )}
         name="lastname"
       />
-      {errors.firstname?.message}
+      {errors.lastname && <Text>{errors.lastname?.message}</Text>}
 
 
 			<Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={
+					validators.email
+        }
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -140,16 +185,16 @@ export default function RegisterForm() {
         )}
         name="email"
       />
-      {errors.email && <Text>Votre email est requis.</Text>}
+      {errors.email && <Text>{errors.email?.message}</Text>}
 
 
 
 
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={
+					validators.password
+				}
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -161,15 +206,15 @@ export default function RegisterForm() {
         )}
         name="password"
       />
-      {errors.password && <Text>Le mot de passe est requis</Text>}
+      {errors.password && <Text>{errors.password.message}</Text>}
 
 
 
 			<Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={
+					validators.confirmPassword
+				}
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -181,7 +226,7 @@ export default function RegisterForm() {
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && <Text>La confirmation mot de passe est requise.</Text>}
+      {errors.confirmPassword && <Text>{errors.confirmPassword?.message} </Text>}
 
 
 
