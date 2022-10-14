@@ -1,28 +1,34 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/LoginScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import RegisterScreen from "../screens/RegisterScreen";
-import { FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { FontAwesome } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import ProjectScreen from "../screens/ProjectScreen";
-import TicketScreen from "../screens/TicketScreen";
+import ListProjectsScreen from "../screens/Projects/ListProjectsScreen";
+import ProjectDetailScreen from "../screens/Projects/ProjectDetailScreen";
+import CreateProjectScreen from "../screens/Projects/CreateProjectScreen";
+
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
   AuthContextType,
 } from "../types";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -137,7 +143,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Projects"
-        component={ProfileScreen}
+        component={ListProjectsScreen}
         options={{
           title: "Mes projets",
           tabBarIcon: ({ color }) => <TabBarIcon name="trello" color={color} />,
@@ -177,28 +183,21 @@ function DashboardStack() {
       <Stack.Screen
         options={{ headerShown: false }}
         name="Project_details"
-        component={ProjectScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Ticket_details"
-        component={TicketScreen}
+        component={ProjectDetailScreen}
       />
     </Stack.Navigator>
   );
 }
 
-// function ProjectsStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="Dashboard" component={ProjectsScreen} />
-//       <Stack.Screen name="Project_details" component={Project} />
-//       <Stack.Screen name="Ticket_details" component={Ticket} />
-//       {/* <Stack.Screen name="Create_Project" component={ProjectCreate} />
-//         <Stack.Screen name="Create_Ticket" component={TicketCreate} />
-//     </Stack.Navigator>
-//   );
-// }
+/* function ProjectStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Projects" component={ProjectsScreen} />
+      <Stack.Screen name="Project" component={ProjectScreen} />
+      <Stack.Screen name="Create_Project" component={CreateProjectScreen} />
+    </Stack.Navigator>
+  );
+} */
 
 // function ProfileStack() {
 //   return (
