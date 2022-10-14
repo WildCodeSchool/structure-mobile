@@ -2,6 +2,8 @@ import { StyleSheet } from "react-native";
 import Projects from "../../components/Project/Projects";
 import { Text, View, Button } from "../../components/Themed";
 import navigation from "../../navigation";
+import { gql, useQuery } from '@apollo/client';
+
 
 export default function ProjectsScreen({navigation}: any) {
   return (
