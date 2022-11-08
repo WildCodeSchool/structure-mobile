@@ -143,7 +143,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Projects"
-        component={ListProjectsScreen}
+        component={ProjectStack}
         options={{
           title: "Mes projets",
           tabBarIcon: ({ color }) => <TabBarIcon name="trello" color={color} />,
@@ -180,24 +180,19 @@ function DashboardStack() {
         name="Dashboard"
         component={DashboardScreen}
       />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Project_details"
-        component={ProjectDetailScreen}
-      />
     </Stack.Navigator>
   );
 }
 
-/* function ProjectStack() {
+function ProjectStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Projects" component={ProjectsScreen} />
-      <Stack.Screen name="Project" component={ProjectScreen} />
-      <Stack.Screen name="Create_Project" component={CreateProjectScreen} />
+      <Stack.Screen name="Projects_list" component={ListProjectsScreen} />
+      <Stack.Screen name="Project_details" component={ProjectDetailScreen} />
+      <Stack.Screen name="Create_project" component={CreateProjectScreen} />
     </Stack.Navigator>
   );
-} */
+}
 
 // function ProfileStack() {
 //   return (
