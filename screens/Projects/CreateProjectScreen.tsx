@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import CreateProject from "../../components/Project/CreateProject";
 import { Text, View } from "../../components/Themed";
 
-export default function CreateProjectScreen({navigation}: any) {
+export default function CreateProjectScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nouveau projet</Text>
