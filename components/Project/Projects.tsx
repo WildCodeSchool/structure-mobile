@@ -19,7 +19,7 @@ export default function Projects() {
       </View>
     );
   
-    console.log(data) // not working
+    console.log(data)
   
   return (
     <View style={styles.container}>
