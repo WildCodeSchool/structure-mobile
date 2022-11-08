@@ -193,12 +193,3 @@ function ProjectStack() {
     </Stack.Navigator>
   );
 }
-
-// function ProfileStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="Profile" component={ProfileScreen} initialParams={{ userId: user.id }}/>
-//       <Stack.Screen name="Settings" component={SettingsScreen} />
-//     </Stack.Navigator>
-//   );
-//
