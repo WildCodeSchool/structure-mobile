@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import CreateProject from "../../components/Project/CreateProject";
 import { Text, View } from "../../components/Themed";
 
 export default function CreateProjectScreen({navigation}: any) {
@@ -10,6 +11,7 @@ export default function CreateProjectScreen({navigation}: any) {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+      <CreateProject/>
     </View>
   );
 }

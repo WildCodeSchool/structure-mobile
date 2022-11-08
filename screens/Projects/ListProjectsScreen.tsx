@@ -3,9 +3,12 @@ import Projects from "../../components/Project/Projects";
 import { Text, View, Button } from "../../components/Themed";
 import navigation from "../../navigation";
 import { gql, useQuery } from '@apollo/client';
+import { useNavigation } from "@react-navigation/native";
 
 
-export default function ProjectsScreen({navigation}: any) {
+export default function ProjectsScreen() {
+  const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mes projets</Text>
@@ -17,7 +20,7 @@ export default function ProjectsScreen({navigation}: any) {
       <Projects/>
       <Button 
       title="Nouveau Projet" 
-      onPress={() => console.log('add new project')}/>
+      onPress={() => navigation.navigate('Create_project')}/>
     </View>
   );
 }
