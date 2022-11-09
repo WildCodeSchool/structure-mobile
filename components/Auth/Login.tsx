@@ -9,13 +9,16 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { RootTabParamList, AuthContextType } from "../../types";
+import { RootTabParamList, AuthContextType, User, ValidatorForm } from "../../types";
 
 
 interface ILoginFormData {
   email: string;
   password: string;
 }
+
+type LoginFormData = Pick<User, "email" | "password">;
+type ValidatorLogin = ValidatorForm<keyof LoginFormData>
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
