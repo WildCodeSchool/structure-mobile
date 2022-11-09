@@ -27,8 +27,10 @@ export type RootStackParamList = {
   Dashboard: undefined;
   Modal: undefined;
   NotFound: undefined;
-  Project_details: undefined;
   Ticket_details: undefined;
+  Projects_list: undefined;
+  Project_details: undefined;
+  Create_project: undefined;
 };
 //Props des Screen de "RootNavigator"
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

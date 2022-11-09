@@ -12,3 +12,12 @@ export const REGISTER_USER = gql`
 		register(data: $data)
 	}
 `
+export const GET_PROJECTS = gql`
+	query Projects {
+		projects {
+			createdAt
+			id
+			subject
+		}
+	}
+`

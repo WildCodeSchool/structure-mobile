@@ -1,15 +1,17 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "../components/Themed";
+import CreateProject from "../../components/Project/CreateProject";
+import { Text, View } from "../../components/Themed";
 
-export default function ProjectScreen() {
+export default function CreateProjectScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Le projet</Text>
+      <Text style={styles.title}>Nouveau projet</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+      <CreateProject/>
     </View>
   );
 }
