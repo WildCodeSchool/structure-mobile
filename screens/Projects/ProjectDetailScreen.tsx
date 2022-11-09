@@ -1,15 +1,12 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
+import ProjectDetails from "../../components/Project/ProjectDetails";
 
 export default function ProjectDetailScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Détails du projet</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <ProjectDetails />
     </View>
   );
 }
@@ -17,8 +14,8 @@ export default function ProjectDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   title: {
     fontSize: 20,

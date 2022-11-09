@@ -202,21 +202,9 @@ function DashboardStack() {
 function ProjectStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Projects_list"
-        component={ListProjectsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Project_details"
-        component={ProjectDetailScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Create_project"
-        component={CreateProjectScreen}
-      />
+      <Stack.Screen name="Projects_list" component={ListProjectsScreen} />
+      <Stack.Screen name="Project_details" component={ProjectDetailScreen} />
+      <Stack.Screen name="Create_project" component={CreateProjectScreen} />
     </Stack.Navigator>
   );
 }
@@ -224,21 +212,9 @@ function ProjectStack() {
 function TicketStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Tickets_list"
-        component={ListTicketsScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Ticket_details"
-        component={TicketDetailScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Create_ticket"
-        component={CreateTicketScreen}
-      />
+      <Stack.Screen name="Tickets_list" component={ListTicketsScreen} />
+      <Stack.Screen name="Ticket_details" component={TicketDetailScreen} />
+      <Stack.Screen name="Create_ticket" component={CreateTicketScreen} />
     </Stack.Navigator>
   );
 }
