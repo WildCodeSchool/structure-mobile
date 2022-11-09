@@ -28,6 +28,9 @@ import {
   RootTabScreenProps,
   AuthContextType,
 } from "../types";
+import ListTicketsScreen from "../screens/Tickets/ListTicketsScreen";
+import TicketDetailScreen from "../screens/Tickets/TicketDetailScreen";
+import CreateTicketScreen from "../screens/Tickets/CreateTicketScreen";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -182,6 +185,22 @@ function DashboardStack() {
         name="Dashboard"
         component={DashboardScreen}
       />
+      <Stack.Screen name="All_projects" component={ProjectStack} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Project_details"
+        component={ProjectDetailScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="All_tickets"
+        component={TicketStack}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Ticket_details"
+        component={TicketDetailScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -189,9 +208,43 @@ function DashboardStack() {
 function ProjectStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Projects_list" component={ListProjectsScreen} />
-      <Stack.Screen name="Project_details" component={ProjectDetailScreen} />
-      <Stack.Screen name="Create_project" component={CreateProjectScreen} />
+      <Stack.Screen
+        name="Projects_list"
+        component={ListProjectsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Project_details"
+        component={ProjectDetailScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Create_project"
+        component={CreateProjectScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function TicketStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Tickets_list"
+        component={ListTicketsScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Ticket_details"
+        component={TicketDetailScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Create_ticket"
+        component={CreateTicketScreen}
+      />
     </Stack.Navigator>
   );
 }

@@ -29,4 +29,14 @@ export default StyleSheet.create({
   h2: { fontFamily: Fonts.RobotoBold, fontSize: Sizes.fontH2 },
   h3: { fontFamily: Fonts.RobotoBold, fontSize: Sizes.fontH3 },
   text: { fontFamily: Fonts.RobotoLight, fontSize: 12 },
+
+  //buttons
+  buttonPrimary: {
+    fontFamily: Fonts.RobotoMedium,
+    fontSize: Sizes.p,
+    backgroundColor: Colors.blue,
+    borderRadius: Sizes.borderRadius,
+    color: Colors.white,
+    padding: Sizes.spacing,
+  },
 });

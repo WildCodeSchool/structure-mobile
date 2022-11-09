@@ -8,4 +8,6 @@ export default {
   fontH4: 16,
   fontH5: 14,
   fontH6: 12,
+  button: 18,
+  p: 18,
 };

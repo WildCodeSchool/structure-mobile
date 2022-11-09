@@ -5,21 +5,21 @@ import navigation from "../../navigation";
 import { gql, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ProjectsScreen() {
+export default function TicketsScreen() {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mes projets</Text>
+      <Text style={styles.title}>Mes tickets</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Projects />
+
       <Button
-        title="Nouveau Projet"
-        onPress={() => navigation.navigate("Create_project")}
+        title="Nouveau ticket"
+        onPress={() => navigation.navigate("Create_ticket")}
       />
     </View>
   );
