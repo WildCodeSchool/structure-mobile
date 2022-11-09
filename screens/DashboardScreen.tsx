@@ -34,15 +34,15 @@ export default function DashboardScreen({
 
       <TouchableOpacity
         style={Style.buttonPrimary}
-        onPress={() => navigation.navigate("All_projects")}
+        onPress={() => navigation.navigate("Project_details")}
       >
-        <Text>Mes projets</Text>
+        <Text>Détail du projet</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={Style.buttonPrimary}
-        onPress={() => navigation.navigate("All_tickets")}
+        onPress={() => navigation.navigate("Ticket_details")}
       >
-        <Text>Mes tickets</Text>
+        <Text>Détail du ticket</Text>
       </TouchableOpacity>
 
       <View />

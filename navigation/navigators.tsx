@@ -185,16 +185,10 @@ function DashboardStack() {
         name="Dashboard"
         component={DashboardScreen}
       />
-      <Stack.Screen name="All_projects" component={ProjectStack} />
       <Stack.Screen
         options={{ headerShown: false }}
         name="Project_details"
         component={ProjectDetailScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="All_tickets"
-        component={TicketStack}
       />
       <Stack.Screen
         options={{ headerShown: false }}

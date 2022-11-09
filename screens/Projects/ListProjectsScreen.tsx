@@ -1,9 +1,12 @@
-import { StyleSheet, Button } from "react-native";
+import { StyleSheet, Button, TouchableOpacity } from "react-native";
 import Projects from "../../components/Project/Projects";
 import { Text, View } from "../../components/Themed";
 import navigation from "../../navigation";
 import { gql, useQuery } from "@apollo/client";
+
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import Style from "../../style/Style";
 
 export default function ProjectsScreen() {
   const navigation = useNavigation();
@@ -16,7 +19,14 @@ export default function ProjectsScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Projects />
+
+      <TouchableOpacity
+        style={Style.buttonPrimary}
+        onPress={() => navigation.navigate("Project_details")}
+      >
+        <Projects />
+        <Text>Détail du projet</Text>
+      </TouchableOpacity>
       <Button
         title="Nouveau Projet"
         onPress={() => navigation.navigate("Create_project")}
