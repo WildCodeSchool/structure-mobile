@@ -3,6 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { GET_PROJECTS } from "../../apollo/queries";
 import { useQuery } from "@apollo/client";
+import ProjectCard from "./ProjectCard";
+import { Project } from "../../types";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});
+
 
 export default function Projects() {
   const { data, loading, error } = useQuery(GET_PROJECTS);
@@ -19,23 +32,13 @@ export default function Projects() {
       </View>
     );
   
-    console.log(data)
+    //console.log(data);
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Liste des projets</Text>
+      {data.projects.map((project: Project) => (
+        <ProjectCard key={project.id} title={project.title} subject={project.subject} createdAt={project.createdAt}/>
+      ))}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});
