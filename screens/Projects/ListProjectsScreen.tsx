@@ -19,7 +19,7 @@ export default function ProjectsScreen() {
       />
       <Projects/>
       <Button 
-      title="Nouveau Projet" 
+      title="+" 
       onPress={() => navigation.navigate('Create_project')}/>
     </View>
   );
