@@ -45,6 +45,8 @@ export default function RootNavigator() {
       try {
         const token = await AsyncStorage.getItem("token");
         console.log("🚀 ~ token", token);
+        const userName = await AsyncStorage.getItem("firstname");
+        console.log("🚀 ~ firstname", userName);
         token ? setSignedIn(true) : setSignedIn(false);
       } catch (e) {
         console.log(e);
