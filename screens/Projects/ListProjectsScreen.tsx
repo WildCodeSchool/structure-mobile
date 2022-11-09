@@ -15,11 +15,9 @@ export default function ProjectsScreen() {
       <View>
         <Projects />
       </View>
-
-      <Button
-        title="Nouveau Projet"
-        onPress={() => navigation.navigate("Create_project")}
-      />
+      <Button 
+      title="+" 
+      onPress={() => navigation.navigate('Create_project')}/>
     </View>
   );
 }

@@ -16,11 +16,13 @@ export const REGISTER_USER = gql`
   }
 `;
 export const GET_PROJECTS = gql`
-  query Projects {
-    projects {
-      createdAt
-      id
-      subject
-    }
-  }
-`;
+	query Projects {
+		projects {
+			title
+			createdAt
+			id
+			subject
+		}
+	}
+`
+
