@@ -1,12 +1,17 @@
 import { StyleSheet } from "react-native";
+import CreateTicket from "../../components/Project/CreateProject";
 import { Text, View } from "../../components/Themed";
-import ProjectDetails from "../../components/Project/ProjectDetails";
 
-export default function ProjectDetailScreen() {
+export default function CreateTicketScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Détails du projet</Text>
-      <ProjectDetails />
+      <Text style={styles.title}>Nouveau ticket</Text>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
+      <CreateTicket />
     </View>
   );
 }
@@ -14,8 +19,8 @@ export default function ProjectDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,

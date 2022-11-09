@@ -1,23 +1,20 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Button } from "react-native";
 import Projects from "../../components/Project/Projects";
-import { Text, View, Button } from "../../components/Themed";
-import navigation from "../../navigation";
-import { gql, useQuery } from '@apollo/client';
+import { Text, View } from "../../components/Themed";
+import { gql, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-
+import React from "react";
+import Style from "../../style/Style";
 
 export default function ProjectsScreen() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mes projets</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Projects/>
+      <View>
+        <Projects />
+      </View>
       <Button 
       title="+" 
       onPress={() => navigation.navigate('Create_project')}/>
@@ -28,16 +25,11 @@ export default function ProjectsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

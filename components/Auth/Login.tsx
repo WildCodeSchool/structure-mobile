@@ -11,7 +11,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { RootTabParamList, AuthContextType } from "../../types";
 
-
 interface ILoginFormData {
   email: string;
   password: string;
@@ -20,24 +19,24 @@ interface ILoginFormData {
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
 
-	const validators: any = {
-		email: {
-			required: {
-				value: true,
-				message: "L'email est requis"
-			},
-			pattern: {
-				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-				message: 'Adresse email non valide'
-			}
-		},
-		password: {
-			required: {
-				value: true,
-				message: 'Le mot de passe est requis'
-			}
-		}
-	}
+  const validators: any = {
+    email: {
+      required: {
+        value: true,
+        message: "L'email est requis",
+      },
+      pattern: {
+        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        message: "Adresse email non valide",
+      },
+    },
+    password: {
+      required: {
+        value: true,
+        message: "Le mot de passe est requis",
+      },
+    },
+  };
 
   const {
     control,
@@ -58,6 +57,9 @@ export default function Login() {
       .then((data) => {
         if (data) {
           AsyncStorage.setItem("token", data.data.login);
+          AsyncStorage.setItem("userId", data.data.id);
+          AsyncStorage.setItem("name", data.data.firstname);
+
           setSignedIn(true);
           navigation.navigate("IsSignedIn");
         }
@@ -69,9 +71,7 @@ export default function Login() {
     <View>
       <Controller
         control={control}
-        rules={
-          validators.email
-        }
+        rules={validators.email}
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
@@ -86,15 +86,13 @@ export default function Login() {
 
       <Controller
         control={control}
-        rules={
-          validators.password
-        }
+        rules={validators.password}
         render={({ field: { onChange, onBlur, value } }) => (
           <InputGroup
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            password= {true}
+            password={true}
             placeholder="votre password"
             validator={validators}
           />
