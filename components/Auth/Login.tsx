@@ -9,34 +9,35 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { RootTabParamList, AuthContextType } from "../../types";
+import { RootTabParamList, AuthContextType, User, ValidatorForm } from "../../types";
 
-interface ILoginFormData {
-  email: string;
-  password: string;
-}
+
+type ILoginFormData = Pick<User, "email" | "password">;
+type ValidatorLogin = ValidatorForm<keyof ILoginFormData>
+
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
 
-  const validators: any = {
-    email: {
-      required: {
-        value: true,
-        message: "L'email est requis",
-      },
-      pattern: {
-        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-        message: "Adresse email non valide",
-      },
-    },
-    password: {
-      required: {
-        value: true,
-        message: "Le mot de passe est requis",
-      },
-    },
-  };
+	const validators: ValidatorLogin = {
+		email: {
+			required: {
+				value: true,
+				message: "L'email est requis"
+			},
+			pattern: {
+				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+				message: 'Adresse email non valide'
+			}
+		},
+		password: {
+			required: {
+				value: true,
+				message: 'Le mot de passe est requis'
+			}
+		}
+	}
+
 
   const {
     control,
@@ -69,35 +70,23 @@ export default function Login() {
 
   return (
     <View>
-      <Controller
+   			<InputGroup<ILoginFormData>
+        Controller={Controller}
         control={control}
-        rules={validators.email}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <InputGroup
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="votre email"
-          />
-        )}
-        name="email"
+        field="email"
+        label={"Votre email"}
+        validators={validators}
+        errors={errors}
       />
-      {errors.email?.message && <Text>{errors.email?.message}</Text>}
+      {errors.email && <Text>{errors.email?.message}</Text>}
 
-      <Controller
+      <InputGroup<ILoginFormData>
+        Controller={Controller}
         control={control}
-        rules={validators.password}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <InputGroup
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            password={true}
-            placeholder="votre password"
-            validator={validators}
-          />
-        )}
-        name="password"
+        field="password"
+        label={"Votre mot de passe"}
+        validators={validators}
+        errors={errors}
       />
       {errors.password && <Text>{errors.password?.message}</Text>}
 

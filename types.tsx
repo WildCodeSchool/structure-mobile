@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RegisterOptions } from "react-hook-form";
 
 declare global {
   namespace ReactNavigation {
@@ -62,6 +63,7 @@ export type AuthContextType = {
   signedIn: Auth;
   setSignedIn: (signedIn: Auth) => void;
 };
+
 
 // ------------------- Models ------------------------
 export interface User {
@@ -160,3 +162,28 @@ export enum Priority {
 	MEDIUM = "MEDIUM",
 	HIGH = "HIGH"
 }
+
+
+// ----------------- FORM --------------------------
+
+// Exemple : type ValidatorFormLogin = ValidatorForm<"email" | "password">
+export type ValidatorForm<K extends string> = Record<K, RegisterOptions>
+
+
+// -------------------  API RESPONSE ------------------------
+
+/* For query "GET_TICKETS"  ex: useQuery<TicketsData>(GET_TICKETS) */
+export interface TicketsData {
+	tickets: Ticket[]
+}
+
+/* For query "GET_PROJECTS"  ex: useQuery<ProjectsData>(GET_PROJECTS) */
+export interface ProjectsData {
+  projects: Project[]
+}
+
+/* For query "GET_PROJECT"  ex: useQuery<ProjectData>(GET_PROJECT) */
+export interface ProjectData {
+  project: Project
+}
+
