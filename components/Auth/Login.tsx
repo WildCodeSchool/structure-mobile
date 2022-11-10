@@ -12,13 +12,9 @@ import { useNavigation } from "@react-navigation/native";
 import { RootTabParamList, AuthContextType, User, ValidatorForm } from "../../types";
 
 
-// interface ILoginFormData {
-//   email: string;
-//   password: string;
-// }
-
 type ILoginFormData = Pick<User, "email" | "password">;
 type ValidatorLogin = ValidatorForm<keyof ILoginFormData>
+
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
@@ -42,6 +38,7 @@ export default function Login() {
 		}
 	}
 
+
   const {
     control,
     handleSubmit,
@@ -61,6 +58,9 @@ export default function Login() {
       .then((data) => {
         if (data) {
           AsyncStorage.setItem("token", data.data.login);
+          AsyncStorage.setItem("userId", data.data.id);
+          AsyncStorage.setItem("name", data.data.firstname);
+
           setSignedIn(true);
           navigation.navigate("IsSignedIn");
         }

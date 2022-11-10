@@ -28,6 +28,9 @@ import {
   RootTabScreenProps,
   AuthContextType,
 } from "../types";
+import ListTicketsScreen from "../screens/Tickets/ListTicketsScreen";
+import TicketDetailScreen from "../screens/Tickets/TicketDetailScreen";
+import CreateTicketScreen from "../screens/Tickets/CreateTicketScreen";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -45,6 +48,8 @@ export default function RootNavigator() {
       try {
         const token = await AsyncStorage.getItem("token");
         console.log("🚀 ~ token", token);
+        const userName = await AsyncStorage.getItem("firstname");
+        console.log("🚀 ~ firstname", userName);
         token ? setSignedIn(true) : setSignedIn(false);
       } catch (e) {
         console.log(e);
@@ -180,6 +185,16 @@ function DashboardStack() {
         name="Dashboard"
         component={DashboardScreen}
       />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Project_details"
+        component={ProjectDetailScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Ticket_details"
+        component={TicketDetailScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -190,6 +205,16 @@ function ProjectStack() {
       <Stack.Screen name="Projects_list" component={ListProjectsScreen} />
       <Stack.Screen name="Project_details" component={ProjectDetailScreen} />
       <Stack.Screen name="Create_project" component={CreateProjectScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function TicketStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Tickets_list" component={ListTicketsScreen} />
+      <Stack.Screen name="Ticket_details" component={TicketDetailScreen} />
+      <Stack.Screen name="Create_ticket" component={CreateTicketScreen} />
     </Stack.Navigator>
   );
 }

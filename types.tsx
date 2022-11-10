@@ -28,10 +28,14 @@ export type RootStackParamList = {
   Dashboard: undefined;
   Modal: undefined;
   NotFound: undefined;
+  Tickets_list: undefined;
   Ticket_details: undefined;
+  Create_ticket: undefined;
   Projects_list: undefined;
   Project_details: undefined;
   Create_project: undefined;
+  All_projects: undefined;
+  All_tickets: undefined;
 };
 //Props des Screen de "RootNavigator"
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -44,6 +48,7 @@ export type RootTabParamList = {
   Projects: { userId: string };
   Profile: { userId: string };
 };
+
 //Props des screen "BottomTab"
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<
@@ -60,9 +65,7 @@ export type AuthContextType = {
 };
 
 
-
-
-// ------------------- Model ------------------------
+// ------------------- Models ------------------------
 export interface User {
 	id: number
 	firstname: string
@@ -143,8 +146,8 @@ export interface Label {
 }
 
 export enum Role {
-	USER = "LOW",
-	ADMIN = "USER"
+	USER = "USER",
+	ADMIN = "ADMIN"
 }
 
 export enum Status {
@@ -159,6 +162,7 @@ export enum Priority {
 	MEDIUM = "MEDIUM",
 	HIGH = "HIGH"
 }
+
 
 // ----------------- FORM --------------------------
 
