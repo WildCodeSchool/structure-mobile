@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -9,17 +9,33 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { RootTabParamList, AuthContextType } from "../../types";
+import {
+  RootTabParamList,
+  AuthContextType,
+  User,
+  ValidatorForm,
+} from "../../types";
 
-interface ILoginFormData {
-  email: string;
-  password: string;
-}
+export interface LoginFormData extends Pick<User, "email" | "password"> {}
+
+type ValidatorLogin = ValidatorForm<keyof LoginFormData>;
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
+  const [mutateLogin, { data, loading, error: ApolloError }] =
+    useMutation(LOGIN_MUTATION);
 
-  const validators: any = {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    defaultValues: { email: "", password: "" },
+    mode: "onTouched",
+  });
+
+  const validators: ValidatorLogin = {
     email: {
       required: {
         value: true,
@@ -38,17 +54,15 @@ export default function Login() {
     },
   };
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: { email: "", password: "" },
-  });
-  const [mutateLogin, { data, loading, error: ApolloError }] =
-    useMutation(LOGIN_MUTATION);
-  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
-  const onSubmit: SubmitHandler<ILoginFormData> = (payload) => {
+  const onSubmit: SubmitHandler<LoginFormData> = (payload) => {
+    const setToken = async (token: string) => {
+      try {
+        await AsyncStorage.setItem("token", token)
+      } catch(e) {
+        console.log(e)
+      }
+    }
+
     mutateLogin({
       variables: {
         data: payload,
@@ -56,10 +70,8 @@ export default function Login() {
     })
       .then((data) => {
         if (data) {
-          AsyncStorage.setItem("token", data.data.login);
-          AsyncStorage.setItem("userId", data.data.id);
-          AsyncStorage.setItem("name", data.data.firstname);
-
+          const token = data.data.login;
+          setToken(token);
           setSignedIn(true);
           navigation.navigate("IsSignedIn");
         }
@@ -69,35 +81,23 @@ export default function Login() {
 
   return (
     <View>
-      <Controller
+      <InputGroup<LoginFormData>
+        Controller={Controller}
         control={control}
-        rules={validators.email}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <InputGroup
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="votre email"
-          />
-        )}
-        name="email"
+        field="email"
+        label="Email"
+        validators={validators}
+        errors={errors}
       />
       {errors.email?.message && <Text>{errors.email?.message}</Text>}
 
-      <Controller
+      <InputGroup<LoginFormData>
+        Controller={Controller}
         control={control}
-        rules={validators.password}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <InputGroup
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            password={true}
-            placeholder="votre password"
-            validator={validators}
-          />
-        )}
-        name="password"
+        field="password"
+        label="Mot de passe"
+        validators={validators}
+        errors={errors}
       />
       {errors.password && <Text>{errors.password?.message}</Text>}
 

@@ -12,12 +12,10 @@ export default function ProjectsScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mes projets</Text>
-      <View>
-        <Projects />
+      <Projects />
+      <View style={styles.buttonAddProject}>
+      <Button  title="+" onPress={() => navigation.navigate("Create_project")} />
       </View>
-      <Button 
-      title="+" 
-      onPress={() => navigation.navigate('Create_project')}/>
     </View>
   );
 }
@@ -32,4 +30,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  buttonAddProject:{
+    flex: 1,
+    justifyContent: "flex-end",
+  }
 });

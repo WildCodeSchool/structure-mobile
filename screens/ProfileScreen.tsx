@@ -1,9 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { Text, View, Button } from "../components/Themed";
+import { Text, View } from "../components/Themed";
+import { Button } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { AuthContextType } from "../types";
+import App from "../App";
+import { client } from "../apollo/config";
 
 export default function ProfileScreen() {
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
@@ -12,6 +15,7 @@ export default function ProfileScreen() {
     try {
       await AsyncStorage.removeItem("token");
       setSignedIn(false);
+      client.resetStore()
     } catch (err) {
       console.log(err);
     }
@@ -24,7 +28,10 @@ export default function ProfileScreen() {
       <Text style={styles.title}>Profile</Text>
 
       <Text>Bla bla bla bla bla </Text>
-      <Button title="Déconnexion" onPress={signOut} />
+      <Button
+        title="Déconnexion"
+        onPress={signOut}
+      />
     </View>
   );
 }
