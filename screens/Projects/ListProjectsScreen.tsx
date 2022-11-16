@@ -23,8 +23,6 @@ export default function ProjectsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
   },
   title: {
     fontSize: 20,
