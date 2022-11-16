@@ -22,7 +22,6 @@ query IsExistUser($data: isExistUserInput!) {
   isExistUser(data: $data)
 }
 `
-
 export const GET_ME = gql`
 	query Me {
 		me {
@@ -36,7 +35,6 @@ export const GET_ME = gql`
 `
 
 //----------------------PROJECT--------------------------------
-
 
 export const GET_PROJECTS = gql`
 	query Projects {

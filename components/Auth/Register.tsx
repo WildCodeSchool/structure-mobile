@@ -200,7 +200,6 @@ export default function RegisterForm() {
       />
       {errors.confirmPassword && <Text>{errors.confirmPassword?.message}</Text>}
 
-
       <Button onPress={handleSubmit(onSubmit)}>S'inscrire</Button>
     </View>
   );

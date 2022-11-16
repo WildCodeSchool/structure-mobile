@@ -89,7 +89,7 @@ export default function Login() {
         validators={validators}
         errors={errors}
       />
-      {errors.email?.message && <Text>{errors.email?.message}</Text>}
+      {errors.email && <Text>{errors.email?.message}</Text>}
 
       <InputGroup<LoginFormData>
         Controller={Controller}

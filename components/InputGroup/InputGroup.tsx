@@ -32,21 +32,23 @@ export const InputGroup = <T extends FieldValues>(
 ) => {
   return (
     <View>
-      <Text>{props.label}</Text>
-      <Controller
-        control={props.control}
-        rules={props.validators[props.field]}
-        name={props.field}
-        render={({ field: { onChange, value, onBlur } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-      />
-    </View>
+      <View>
+        <Text>{props.label}</Text>
+        <Controller
+          control={props.control}
+          rules={props.validators[props.field]}
+          name={props.field}
+          render={({ field: { onChange, value, onBlur } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+        />
+     </View>
+  </View>
   );
 };
 
