@@ -5,11 +5,7 @@ import { gql } from "@apollo/client";
 
 export const LOGIN_MUTATION = gql`
   mutation Mutation($data: LoginInput!) {
-    login(data: $data) {
-      id
-      firstname
-      roles
-    }
+    login(data: $data)
   }
 `;
 
@@ -26,17 +22,37 @@ query IsExistUser($data: isExistUserInput!) {
   isExistUser(data: $data)
 }
 `
+export const GET_ME = gql`
+	query Me {
+		me {
+			id
+			firstname
+			lastname
+			email
+			roles
+		}
+	}
+`
 
 //----------------------PROJECT--------------------------------
 
 export const GET_PROJECTS = gql`
 	query Projects {
 		projects {
-			title
 			createdAt
 			id
 			subject
+			title
 		}
 	}
 `
-
+export const CREATE_PROJECT = gql`
+mutation CreateProject($data: ProjectCreateInput!) {
+  createProject(data: $data) {
+    id
+    title
+		subject
+		code
+  }
+}
+`

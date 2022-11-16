@@ -7,21 +7,20 @@ import Constants from "expo-constants";
 const { manifest } = Constants;
 
 const httpLink = createHttpLink({
-  uri: manifest?.debuggerHost ? `http://${manifest.debuggerHost.split(':').shift()}:4000` : process.env.API_URI,
-  credentials: "same-origin",
+  uri: manifest?.debuggerHost ? `http://${manifest.debuggerHost.split(':').shift()}:4000` : process.env.API_URI
 });
 
 
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   
-  const token = AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem("token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token,
+      authorization: token ? `Bearer ${token}` : ""
     },
   };
 });

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -9,47 +9,60 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { RootTabParamList, AuthContextType, User, ValidatorForm } from "../../types";
+import {
+  RootTabParamList,
+  AuthContextType,
+  User,
+  ValidatorForm,
+} from "../../types";
 
+export interface LoginFormData extends Pick<User, "email" | "password"> {}
 
-type ILoginFormData = Pick<User, "email" | "password">;
-type ValidatorLogin = ValidatorForm<keyof ILoginFormData>
-
+type ValidatorLogin = ValidatorForm<keyof LoginFormData>;
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
-
-	const validators: ValidatorLogin = {
-		email: {
-			required: {
-				value: true,
-				message: "L'email est requis"
-			},
-			pattern: {
-				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-				message: 'Adresse email non valide'
-			}
-		},
-		password: {
-			required: {
-				value: true,
-				message: 'Le mot de passe est requis'
-			}
-		}
-	}
-
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
+  const [mutateLogin, { data, loading, error: ApolloError }] =
+    useMutation(LOGIN_MUTATION);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormData>({
     defaultValues: { email: "", password: "" },
+    mode: "onTouched",
   });
-  const [mutateLogin, { data, loading, error: ApolloError }] =
-    useMutation(LOGIN_MUTATION);
-  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
-  const onSubmit: SubmitHandler<ILoginFormData> = (payload) => {
+
+  const validators: ValidatorLogin = {
+    email: {
+      required: {
+        value: true,
+        message: "L'email est requis",
+      },
+      pattern: {
+        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        message: "Adresse email non valide",
+      },
+    },
+    password: {
+      required: {
+        value: true,
+        message: "Le mot de passe est requis",
+      },
+    },
+  };
+
+  const onSubmit: SubmitHandler<LoginFormData> = (payload) => {
+    const setToken = async (token: string) => {
+      try {
+        await AsyncStorage.setItem("token", token)
+      } catch(e) {
+        console.log(e)
+      }
+    }
+
     mutateLogin({
       variables: {
         data: payload,
@@ -57,10 +70,8 @@ export default function Login() {
     })
       .then((data) => {
         if (data) {
-          AsyncStorage.setItem("token", data.data.login);
-          AsyncStorage.setItem("userId", data.data.id);
-          AsyncStorage.setItem("name", data.data.firstname);
-
+          const token = data.data.login;
+          setToken(token);
           setSignedIn(true);
           navigation.navigate("IsSignedIn");
         }
@@ -70,21 +81,21 @@ export default function Login() {
 
   return (
     <View>
-   			<InputGroup<ILoginFormData>
+      <InputGroup<LoginFormData>
         Controller={Controller}
         control={control}
         field="email"
-        label={"Votre email"}
+        label="Email"
         validators={validators}
         errors={errors}
       />
       {errors.email && <Text>{errors.email?.message}</Text>}
 
-      <InputGroup<ILoginFormData>
+      <InputGroup<LoginFormData>
         Controller={Controller}
         control={control}
         field="password"
-        label={"Votre mot de passe"}
+        label="Mot de passe"
         validators={validators}
         errors={errors}
       />

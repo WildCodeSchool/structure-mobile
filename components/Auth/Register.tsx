@@ -22,6 +22,8 @@ export interface RegisterFormData
 type ValidatorRegister = ValidatorForm<keyof RegisterFormData>;
 
 export default function RegisterForm() {
+  const navigation = useNavigation<RootTabParamList>();
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
   const [getisExistUser] = useLazyQuery<{ isExistUser: boolean }>(
     IS_EXIST_USER
   );
@@ -33,9 +35,6 @@ export default function RegisterForm() {
     watch,
     formState: { errors },
   } = useForm<RegisterFormData>({ mode: "onTouched" });
-
-  const navigation = useNavigation<RootTabParamList>();
-  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
 
   const validators: ValidatorRegister = {
     firstname: {
@@ -82,7 +81,7 @@ export default function RegisterForm() {
               data: { email: value },
             },
           });
-          console.log(response);
+          //console.log(response);
           return !response.data?.isExistUser || "Adresse email déjà utilisée";
         },
       },
@@ -125,13 +124,21 @@ export default function RegisterForm() {
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
     // on enlève confirmPassword de l'objet data
     const { confirmPassword, ...rest } = data;
+    
+    const setToken = async (token: string) => {
+      try {
+        await AsyncStorage.setItem("token", token)
+      } catch(e) {
+        console.log(e)
+      }
+    }
 
     const response = mutateRegister({ variables: { data: rest } });
     response
       .then((data) => {
         if (data) {
-          console.log(data.data.register);
-          AsyncStorage.setItem("token", data.data.register);
+          const token = data.data.register;
+          setToken(token);
           setSignedIn(true);
           navigation.navigate("IsSignedIn");
         }
@@ -147,7 +154,7 @@ export default function RegisterForm() {
         Controller={Controller}
         control={control}
         field="firstname"
-        label={"Votre prénom"}
+        label="Votre prénom"
         validators={validators}
         errors={errors}
       />
@@ -157,7 +164,7 @@ export default function RegisterForm() {
         Controller={Controller}
         control={control}
         field="lastname"
-        label={"Votre nom"}
+        label="Votre nom"
         validators={validators}
         errors={errors}
       />
@@ -167,7 +174,7 @@ export default function RegisterForm() {
         Controller={Controller}
         control={control}
         field="email"
-        label={"Votre email"}
+        label="Votre email"
         validators={validators}
         errors={errors}
       />
@@ -177,7 +184,7 @@ export default function RegisterForm() {
         Controller={Controller}
         control={control}
         field="password"
-        label={"Votre mot de passe"}
+        label="Votre mot de passe"
         validators={validators}
         errors={errors}
       />
@@ -187,12 +194,11 @@ export default function RegisterForm() {
         Controller={Controller}
         control={control}
         field="confirmPassword"
-        label={"Confirmez votre mot de passe"}
+        label="Confirmez votre mot de passe"
         validators={validators}
         errors={errors}
       />
       {errors.confirmPassword && <Text>{errors.confirmPassword?.message}</Text>}
-
 
       <Button onPress={handleSubmit(onSubmit)}>S'inscrire</Button>
     </View>
