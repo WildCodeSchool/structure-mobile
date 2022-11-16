@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ProjectCard({ title, subject, createdAt }) {
+export default function ProjectCard({ id, title, subject, createdAt }) {
   return (
     <View style={styles.project}>
       <Text style={styles.title}>{title}</Text>

@@ -1,5 +1,13 @@
-import React, { useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { GET_ME, GET_PROJECTS } from "../../apollo/queries";
 import { useQuery } from "@apollo/client";
@@ -12,6 +20,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Projects() {
   const navigation = useNavigation();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error } = useQuery(GET_PROJECTS);
   const {
     data: getUser,
@@ -19,18 +29,18 @@ export default function Projects() {
     error: errorGetUser,
   } = useQuery(GET_ME);
 
-  /* const getUserToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      console.log(token);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
   };
 
   useEffect(() => {
-    getUserToken();
-  }, []); */
+    if (!loading) {
+      setProjects(data.projects);
+    }
+  }, [loading]);
 
   if (loading)
     return (
@@ -41,33 +51,33 @@ export default function Projects() {
   if (error)
     return (
       <View>
-        <Text>Oups, une erreur est survenue...</Text>
+        <Text>Erreur lors du chargement des projets...</Text>
       </View>
     );
+  if (projects.length === 0)
+    return <Text>Vous n'avez pas de projet pour l'isntant !</Text>;
 
   return (
-    <View style={styles.container}>
-      {data.projects.map((project: Project) => (
-        <TouchableOpacity
-          key={project.id}
-          style={Style.buttonPrimary}
-          onPress={() => navigation.navigate("Project_details")}
-        >
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={projects}
+        keyExtractor={(item, index) => item.id.toString()}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
+        renderItem={({ item }) => (
           <ProjectCard
-            title={project.title}
-            subject={project.subject}
-            createdAt={project.createdAt}
+            id={item.id}
+            title={item.title}
+            subject={item.subject}
+            createdAt={item.createdAt}
           />
-        </TouchableOpacity>
-      ))}
-    </View>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
