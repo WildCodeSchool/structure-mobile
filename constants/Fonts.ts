@@ -1,6 +1,6 @@
 export default {
-  RobotoLight: "Roboto-Light",
-  RobotoMedium: "Roboto-Medium",
-  RobotoBold: "Roboto-bold",
-  MontserratBold: "Montserrat-bold",
+  robotoLight: "Roboto-Light",
+  robotoMedium: "Roboto-Medium",
+  robotoBold: "Roboto-Bold",
+  montserratBold: "Montserrat-Bold",
 };
