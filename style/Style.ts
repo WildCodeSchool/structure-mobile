@@ -25,14 +25,14 @@ export default StyleSheet.create({
   },
 
   //text
-  h1: { fontFamily: Fonts.MontserratBold, fontSize: Sizes.fontH1 },
-  h2: { fontFamily: Fonts.RobotoBold, fontSize: Sizes.fontH2 },
-  h3: { fontFamily: Fonts.RobotoBold, fontSize: Sizes.fontH3 },
-  text: { fontFamily: Fonts.RobotoLight, fontSize: 12 },
+  h1: { fontFamily: Fonts.montserratBold, fontSize: Sizes.fontH1 },
+  h2: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH2 },
+  h3: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH3 },
+  text: { fontFamily: Fonts.robotoLight, fontSize: 12 },
 
   //buttons
   buttonPrimary: {
-    fontFamily: Fonts.RobotoMedium,
+    fontFamily: Fonts.robotoMedium,
     fontSize: Sizes.p,
     backgroundColor: Colors.blue,
     borderRadius: Sizes.borderRadius,

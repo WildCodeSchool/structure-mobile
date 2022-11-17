@@ -15,11 +15,15 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
+          "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
+          "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+          "Roboto-Light": require("../assets/fonts/Roboto-Light.ttf"),  
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
+
       } finally {
         setLoadingComplete(true);
         SplashScreen.hideAsync();
