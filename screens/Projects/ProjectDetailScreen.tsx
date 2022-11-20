@@ -1,13 +1,59 @@
-import { StyleSheet } from "react-native";
+import React from "react";
+import {
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  ListRenderItem,
+} from "react-native";
 import { Text, View } from "../../components/Themed";
-import ProjectDetails from "../../components/Project/ProjectDetails";
+import { Project, Ticket } from "../../types";
+import TicketCard from "../../components/Ticket/TicketCard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function ProjectDetailScreen() {
+const project = {
+  //id: "",
+  title: "Structure",
+  subject: "Création d'un outils de création et gestion de tickets",
+
+  // updatedAt: "",
+  author: "Nicolas",
+  tickets: {
+    ticket1: {
+      title: "Réflexion navigation",
+      description: "Faire la liste des items présents dans la navbar",
+      status: "En cours",
+      priority: "Haute",
+      //time_estimation: "30min",
+      //files: File[];
+      createdAt: 22122021,
+      //updatedAt: ,
+      user_author: "Geoffrey",
+      user_assign: "Nicolas",
+    },
+  },
+};
+
+export default function ProjectDetailScreen(project: Project) {
+  const renderTicket: ListRenderItem<Ticket> = ({}) => {
+    return <TicketCard key={ticket.id} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Détails du projet</Text>
-      <ProjectDetails />
-    </View>
+    <SafeAreaView>
+      <View style={styles.container}>
+        <Text style={styles.title}>{project.title}</Text>
+        <Text>{project.subject}</Text>
+        <View>
+          <Text>Geoffrey M.</Text>
+          <Text>project.createdAt</Text>
+        </View>
+        {project.tickets ? (
+          <FlatList data={project.tickets} renderItem={renderTicket} />
+        ) : (
+          <ActivityIndicator size="large" color="black" />
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 

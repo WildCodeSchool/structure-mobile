@@ -31,6 +31,7 @@ import {
 import ListTicketsScreen from "../screens/Tickets/ListTicketsScreen";
 import TicketDetailScreen from "../screens/Tickets/TicketDetailScreen";
 import CreateTicketScreen from "../screens/Tickets/CreateTicketScreen";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -124,7 +125,7 @@ function BottomTabNavigator() {
         name="Home"
         component={DashboardStack}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
-          title: "Structure",
+          title: "Tableau de bord",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
@@ -133,9 +134,9 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesome
-                name="info-circle"
-                size={25}
+              <SimpleLineIcons
+                name="settings"
+                size={24}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
@@ -175,6 +176,8 @@ function TabBarIcon(props: {
 }
 
 function DashboardStack() {
+  const colorScheme = useColorScheme();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -183,12 +186,20 @@ function DashboardStack() {
         component={DashboardScreen}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerBackTitleVisible: false,
+          headerTintColor: Colors.green,
+        }}
         name="Project_details"
         component={ProjectDetailScreen}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerBackTitleVisible: false,
+          headerTintColor: Colors.green,
+        }}
         name="Ticket_details"
         component={TicketDetailScreen}
       />

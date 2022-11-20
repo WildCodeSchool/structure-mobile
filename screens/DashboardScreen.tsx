@@ -30,21 +30,29 @@ export default function DashboardScreen({
 
   return (
     <View style={Style.flexColumnNoWrap}>
-      <Text style={Style.h1}>Bonjour {name}</Text>
+      <View>
+        <Text style={Style.h1}>Bonjour Username,</Text>
+        <Text>Voici tes projets en cours...</Text>
+      </View>
+      <View>
+        <Text>Mes projets</Text>
+        <TouchableOpacity
+          style={Style.buttonPrimary}
+          onPress={() => navigation.navigate("Project_details")}
+        >
+          <Text>Détail du projet</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <Text>Mes tickets</Text>
 
-      <TouchableOpacity
-        style={Style.buttonPrimary}
-        onPress={() => navigation.navigate("Project_details")}
-      >
-        <Text>Détail du projet</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={Style.buttonPrimary}
-        onPress={() => navigation.navigate("Ticket_details")}
-      >
-        <Text>Détail du ticket</Text>
-      </TouchableOpacity>
-
+        <TouchableOpacity
+          style={Style.buttonPrimary}
+          onPress={() => navigation.navigate("Ticket_details")}
+        >
+          <Text>Détail du ticket</Text>
+        </TouchableOpacity>
+      </View>
       <View />
     </View>
   );
