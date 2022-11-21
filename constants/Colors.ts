@@ -1,10 +1,12 @@
-const green = "0D9488";
-const white = "FFFFFF";
-const blue = "164E63";
-const blueGray50 = "F8FAFC";
-const gray = "94A3B8";
-const lightGray = "CBD5E1";
+const green = "#0D9488";
+const white = "#FFFFFF";
+const blue = "#164E63";
+const blueGray50 = "#F8FAFC";
+const gray = "#94A3B8";
+const lightGray = "#CBD5E1";
+const darkGray = "#212121";
 const tintColorDark = "#fff";
+const black = "#121212";
 
 export default {
   green: green,
@@ -16,6 +18,7 @@ export default {
   light: {
     text: blue,
     background: blueGray50,
+    backgroundCard: white,
     tint: green,
     tabIconDefault: gray,
     tabIconSelected: green,
@@ -25,8 +28,10 @@ export default {
   dark: {
     text: "#fff",
     background: "#000",
-    tint: tintColorDark,
+    backgroundCard: darkGray,
+    tint: green,
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark,
+    backgroundCard: darkGray,
   },
 };

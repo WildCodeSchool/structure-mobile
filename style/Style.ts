@@ -23,10 +23,33 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  //container
+  container: {
+    marginVertical: Sizes.full,
+    marginHorizontal: Sizes.semi,
+  },
 
+  cardContainer: {
+    borderColor: Colors.green,
+    borderWidth: 1,
+    borderRadius: Sizes.semi,
+    padding: Sizes.semi,
+  },
+  header: {
+    fontSize: Sizes.fontH2,
+    fontFamily: Fonts.montserratBold,
+  },
   //text
-  h1: { fontFamily: Fonts.montserratBold, fontSize: Sizes.fontH1 },
-  h2: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH2 },
+  h1: {
+    fontFamily: Fonts.montserratBold,
+    fontSize: Sizes.fontH1,
+    marginBottom: Sizes.semi,
+  },
+  h2: {
+    fontFamily: Fonts.robotoBold,
+    fontSize: Sizes.fontH2,
+    marginBottom: Sizes.semi,
+  },
   h3: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH3 },
   text: { fontFamily: Fonts.robotoLight, fontSize: 12 },
 
@@ -37,6 +60,6 @@ export default StyleSheet.create({
     backgroundColor: Colors.blue,
     borderRadius: Sizes.borderRadius,
     color: Colors.white,
-    padding: Sizes.spacing,
+    padding: Sizes.full,
   },
 });
