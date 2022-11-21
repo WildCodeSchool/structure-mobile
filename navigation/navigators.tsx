@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import { Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import Colors from "../constants/Colors";
@@ -32,6 +32,8 @@ import ListTicketsScreen from "../screens/Tickets/ListTicketsScreen";
 import TicketDetailScreen from "../screens/Tickets/TicketDetailScreen";
 import CreateTicketScreen from "../screens/Tickets/CreateTicketScreen";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import Style from "../style/Style";
+import TicketHeader from "../components/svg/ticketHeader";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -119,6 +121,13 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          elevation: 10,
+        },
+        headerTintColor: Colors[colorScheme].text,
+        headerTitleStyle: [Style.header],
+        headerTitleAlign: "center",
       }}
     >
       <BottomTab.Screen
@@ -126,6 +135,7 @@ function BottomTabNavigator() {
         component={DashboardStack}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
           title: "Tableau de bord",
+          headerLeft: () => <TicketHeader />,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
