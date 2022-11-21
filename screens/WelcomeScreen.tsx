@@ -5,6 +5,8 @@ import Style from "../style/Style";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useColorScheme from "../hooks/useColorScheme";
+import Colors from "../constants/Colors";
+import LogoSvg from "../components/svg/logo";
 
 //S'IDENTIFIER
 export default function WelcomeScreen({
@@ -13,22 +15,26 @@ export default function WelcomeScreen({
   // const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const colorScheme = useColorScheme();
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={[{ backgroundColor: Colors[colorScheme].tint, flex: 1 }]}
+    >
       <View
         style={[
           Style.flexColumnNoWrap,
+          Style.container,
           {
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "0D9488",
+            alignItems: "stretch",
+            justifyContent: "space-around",
+            backgroundColor: Colors.green,
           },
         ]}
       >
-        <Text style={[Style.h1]}>Bienvenue !</Text>
-        <Image
-          resizeMode="contain"
-          source={require("../assets/images/logo.png")}
-        />
+        <View>
+          <LogoSvg />
+          <Text style={[Style.h1]}>
+            Le ticketing pour gagner en produtivité
+          </Text>
+        </View>
         <View style={[Style.flexColumnNoWrap]}>
           <Button
             //style={styles.buttonPrimary}
