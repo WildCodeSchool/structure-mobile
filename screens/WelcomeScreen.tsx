@@ -1,5 +1,4 @@
-import { Image, Button, StyleSheet } from "react-native";
-import { Text, View } from "../components/Themed";
+import { Text } from "../components/Themed";
 import { RootStackScreenProps } from "../types";
 import Style from "../style/Style";
 import React from "react";
@@ -7,6 +6,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
 import LogoSvg from "../components/svg/logo";
+import { Button } from "../components/Button";
+import { View } from "react-native";
+import Sizes from "../constants/Sizes";
 
 //S'IDENTIFIER
 export default function WelcomeScreen({
@@ -20,32 +22,29 @@ export default function WelcomeScreen({
     >
       <View
         style={[
-          Style.flexColumnNoWrap,
+          
           Style.container,
           {
-            alignItems: "stretch",
-            justifyContent: "space-around",
+          
+            justifyContent: "center",
             backgroundColor: Colors.green,
           },
         ]}
       >
-        <View>
+        <View  style={[
+          Style.container,{backgroundColor: Colors[colorScheme].backgroundCard, padding: Sizes.semi}
+        ]}>
+          <View style={[Style.alignCenter]}>
           <LogoSvg />
-          <Text style={[Style.h1]}>
+          </View>
+          <Text style={[Style.h1,]}>
             Le ticketing pour gagner en produtivité
           </Text>
         </View>
-        <View style={[Style.flexColumnNoWrap]}>
-          <Button
-            //style={styles.buttonPrimary}
-            title="Se connecter"
-            onPress={() => navigation.navigate("Login")}
-          />
-          <Button
-            //style={styles.button}
-            title="S'inscrire"
-            onPress={() => navigation.navigate("Register")}
-          />
+        <View style={[Style.flexColumnNoWrap, { backgroundColor: Colors[colorScheme].tint, flex: 1 }]}>
+        <Button type="primary" onPress={() => navigation.navigate("Login")}>S'inscrire</Button>
+       <Button type="secondary" onPress={() => navigation.navigate("Register")}>S'enregistrer</Button>
+  
         </View>
       </View>
     </SafeAreaView>

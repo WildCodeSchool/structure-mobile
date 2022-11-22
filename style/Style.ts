@@ -8,7 +8,8 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
   //display
   flex: { display: "flex" },
-  alignCenter: { justifyContent: "center" },
+  alignCenter: {display: "flex", alignItems:'center', },
+  justifyCenter: {display: "flex", justifyContent:'center',},
   flexRowNoWrap: { display: "flex", flexDirection: "row", flexWrap: "nowrap" },
   flexColumn: { display: "flex", flexDirection: "column", flexWrap: "wrap" },
   flexColumnNoWrap: {
@@ -25,8 +26,9 @@ export default StyleSheet.create({
   },
   //container
   container: {
-    marginVertical: Sizes.full,
+    marginVertical: 40,
     marginHorizontal: Sizes.semi,
+    borderRadius: Sizes.borderRadius,
   },
 
   cardContainer: {
@@ -54,12 +56,24 @@ export default StyleSheet.create({
   text: { fontFamily: Fonts.robotoLight, fontSize: 12 },
 
   //buttons
-  buttonPrimary: {
-    fontFamily: Fonts.robotoMedium,
-    fontSize: Sizes.p,
+  btnPrimary: {
     backgroundColor: Colors.blue,
     borderRadius: Sizes.borderRadius,
-    color: Colors.white,
     padding: Sizes.full,
+    margin: Sizes.full 
   },
+  btnSecondary: {
+    backgroundColor: Colors.white,
+    borderRadius: 30,
+    padding: 16,
+    border: 1,
+    borderColor: Colors.green,
+    margin: Sizes.full 
+  },
+  btnText: {
+    fontFamily: Fonts.robotoMedium,
+    fontSize: Sizes.p,
+    color: Colors.white,
+    textAlign: "center",
+  }
 });

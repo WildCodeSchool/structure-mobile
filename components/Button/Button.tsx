@@ -1,5 +1,6 @@
 import React, { Children } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import Style from "../../style/Style";
 
 interface ButtonProps {
   children: string;
@@ -8,14 +9,15 @@ interface ButtonProps {
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
-  type = "primary",
+  type,
   children,
   onPress,
 }) => {
+  const typeBtn = type === "primary" ? Style.btnPrimary : Style.btnSecondary;
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity style={typeBtn} onPress={onPress}>
       <View>
-        <Text style={[]}>{children}</Text>
+        <Text style={[Style.btnText]}>{children}</Text>
       </View>
     </TouchableOpacity>
   );
