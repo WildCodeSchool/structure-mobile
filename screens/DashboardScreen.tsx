@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RootStackScreenProps } from "../types";
 import { TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
+import Projects from "../components/Project/Projects";
 
 export default function DashboardScreen({
   navigation,
@@ -40,15 +41,7 @@ export default function DashboardScreen({
       </View>
       <View style={[{ marginVertical: 25 }]}>
         <Text style={Style.h2}>Mes projets</Text>
-        <TouchableOpacity
-          style={[
-            Style.cardContainer,
-            { backgroundColor: Colors[colorScheme].backgroundCard },
-          ]}
-          onPress={() => navigation.navigate("Project_details")}
-        >
-          <Text>Détail du projet</Text>
-        </TouchableOpacity>
+        <Projects/>
       </View>
       <View>
         <Text style={Style.h2}>Mes tickets</Text>

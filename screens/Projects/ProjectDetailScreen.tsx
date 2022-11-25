@@ -1,14 +1,15 @@
 import React from "react";
 import {
-  StyleSheet,
   FlatList,
   ActivityIndicator,
   ListRenderItem,
 } from "react-native";
+import Style from "../../style/Style";
 import { Text, View } from "../../components/Themed";
 import { Project, Ticket } from "../../types";
 import TicketCard from "../../components/Ticket/TicketCard";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Colors from "../../constants/Colors";
 
 const project = {
   //id: "",
@@ -18,7 +19,7 @@ const project = {
   // updatedAt: "",
   author: "Nicolas",
   tickets: {
-    ticket1: {
+    ticket: {
       title: "Réflexion navigation",
       description: "Faire la liste des items présents dans la navbar",
       status: "En cours",
@@ -34,42 +35,19 @@ const project = {
 };
 
 export default function ProjectDetailScreen(project: Project) {
-  const renderTicket: ListRenderItem<Ticket> = ({}) => {
-    return <TicketCard key={ticket.id} />;
-  };
-
+ 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <Text style={styles.title}>{project.title}</Text>
-        <Text>{project.subject}</Text>
+      <View style={[Style.container]}>
+        <Text style={Style.h2}>{project.title}</Text>
+        <Text style={Style.text}>{project.subject}</Text>
         <View>
           <Text>Geoffrey M.</Text>
           <Text>project.createdAt</Text>
         </View>
-        {project.tickets ? (
-          <FlatList data={project.tickets} renderItem={renderTicket} />
-        ) : (
-          <ActivityIndicator size="large" color="black" />
-        )}
+       
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

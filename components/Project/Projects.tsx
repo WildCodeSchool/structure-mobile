@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { GET_ME, GET_PROJECTS } from "../../apollo/queries";
@@ -17,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import ProjectCard from "./ProjectCard";
 import { Project } from "../../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Colors from "../../constants/Colors";
 
 export default function Projects({ navigation }: any) {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -49,7 +51,7 @@ export default function Projects({ navigation }: any) {
   if (loading)
     return (
       <View>
-        <Text>Chargement...</Text>
+           <ActivityIndicator size="large" color={Colors.green} />
       </View>
     );
   if (error)
@@ -62,7 +64,6 @@ export default function Projects({ navigation }: any) {
     return <Text>Vous n'avez pas de projet pour l'isntant !</Text>;
 
   return (
-    <SafeAreaView style={styles.container}>
       <FlatList
         data={projects}
         keyExtractor={(item) => item.id.toString()}
@@ -79,7 +80,6 @@ export default function Projects({ navigation }: any) {
           />
         )}
       />
-    </SafeAreaView>
   );
 }
 
