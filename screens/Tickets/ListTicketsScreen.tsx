@@ -1,22 +1,72 @@
-import { StyleSheet, Button } from "react-native";
-import Projects from "../../components/Project/Projects";
+import { StyleSheet, Button, ActivityIndicator, FlatList, ListRenderItem } from "react-native";
+import TicketCard from "../../components/Ticket/TicketCard";
 import { Text, View } from "../../components/Themed";
-import navigation from "../../navigation";
 import { gql, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
+import Style from "../../style/Style";
+import React, { useEffect, useState } from "react";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Ticket } from "../../types";
 
 export default function TicketsScreen() {
   const navigation = useNavigation();
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const { data, loading, error } = useQuery(GET_TICKETS);
 
+  const renderTicket: ListRenderItem<Ticket> = ({item}) => {
+    return  <TicketCard
+      id={item.id}
+      title={item.title}
+      status={item.status}
+      createdAt={item.createdAt}
+     />;
+  };
+
+  const {
+    data: getUser,
+    loading: loadingGetUser,
+    error: errorGetUser,
+  } = useQuery(GET_ME);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    if (!loading) {
+      setTickets(data.projects);
+    }
+  }, [loading]);
+
+  if (loading)
+    return (
+      <View style={[Style.container, Style.justifyCenter, Style.alignCenter ]}>
+           <ActivityIndicator size="large" color={Colors.green} />
+      </View>
+    );
+  if (error)
+    return (
+      <View style={[Style.container, Style.justifyCenter, Style.alignCenter ]}>
+        <Text>Erreur lors du chargement des tickets...</Text>
+      </View>
+    );
+  if (tickets.length === 0)
+    return <Text >Vous n'avez pas de ticket pour le moment !</Text>;
+
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mes tickets</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+    <View>
+      <FlatList
+        data={tickets}
+        keyExtractor={(item, index) => item.id.toString()}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
+        renderItem={renderTicket}
       />
-
       <Button
         title="Nouveau ticket"
         onPress={() => navigation.navigate("Create_ticket")}
@@ -24,20 +74,4 @@ export default function TicketsScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
+   

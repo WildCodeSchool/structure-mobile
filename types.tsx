@@ -82,21 +82,21 @@ export interface User {
 export interface Ticket {
   id: number;
   title: string;
-  description: string;
-  status: Status;
-  priority: Priority;
-  time_estimation: Date;
-  files: File[];
-  createdAt: Date;
-  updatedAt: Date;
-  user_author: User;
-  user_author_id: number;
-  user_assign: User;
-  user_assign_id: number;
-  project: Project;
-  project_id: number;
-  comments: Comment[];
-  labels: Label[];
+  description?: string;
+  status?: Status;
+  priority?: Priority;
+  time_estimation?: Date;
+  files?: File[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  user_author?: User;
+  user_author_id?: number;
+  user_assign?: User;
+  user_assign_id?: number;
+  project?: Project;
+  project_id?: number;
+  comments?: Comment[];
+  labels?: Label[];
 }
 
 export interface File {
