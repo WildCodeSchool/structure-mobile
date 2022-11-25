@@ -1,5 +1,6 @@
 import React, { Children } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import Colors from "../../constants/Colors";
 import Style from "../../style/Style";
 
 interface ButtonProps {
@@ -14,11 +15,10 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   onPress,
 }) => {
   const typeBtn = type === "primary" ? Style.btnPrimary : Style.btnSecondary;
+  const textColor = type === "primary" ? Colors.white : Colors.green;
   return (
     <TouchableOpacity style={typeBtn} onPress={onPress}>
-      <View>
-        <Text style={[Style.btnText]}>{children}</Text>
-      </View>
+        <Text style={[Style.btnText, {color: textColor} ]}>{children}</Text>
     </TouchableOpacity>
   );
 };

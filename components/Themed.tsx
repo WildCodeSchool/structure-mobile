@@ -7,6 +7,7 @@ import { Text as DefaultText, View as DefaultView } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import Style from "../style/Style";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -43,13 +44,6 @@ export function View(props: ViewProps) {
     { light: lightColor, dark: darkColor },
     "background"
   );
-
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
-}
-
-export function Button(props: ViewProps) {
-  const { style, lightColor, ...otherProps } = props;
-  const backgroundColor = Colors.light.button;
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }

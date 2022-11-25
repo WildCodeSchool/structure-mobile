@@ -58,22 +58,26 @@ export default StyleSheet.create({
   //buttons
   btnPrimary: {
     backgroundColor: Colors.blue,
-    borderRadius: Sizes.borderRadius,
-    padding: Sizes.full,
-    margin: Sizes.full 
+    borderRadius: 30,
+    padding: 5,
+    border: 1, 
   },
+
   btnSecondary: {
     backgroundColor: Colors.white,
     borderRadius: 30,
-    padding: 16,
+    padding: 5,
     border: 1,
     borderColor: Colors.green,
-    margin: Sizes.full 
+    marginVertical: Sizes.semi
   },
+
   btnText: {
     fontFamily: Fonts.robotoMedium,
-    fontSize: Sizes.p,
-    color: Colors.white,
+    fontSize: 20,
     textAlign: "center",
+    marginVertical: Sizes.semi
   }
+
+
 });

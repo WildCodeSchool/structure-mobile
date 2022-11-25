@@ -32,6 +32,5 @@ export default {
     tint: green,
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark,
-    backgroundCard: darkGray,
   },
 };

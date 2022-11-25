@@ -9,6 +9,7 @@ import LogoSvg from "../components/svg/logo";
 import { Button } from "../components/Button";
 import { View } from "react-native";
 import Sizes from "../constants/Sizes";
+import Fonts from "../constants/Fonts";
 
 //S'IDENTIFIER
 export default function WelcomeScreen({
@@ -21,30 +22,23 @@ export default function WelcomeScreen({
       style={[{ backgroundColor: Colors[colorScheme].tint, flex: 1 }]}
     >
       <View
-        style={[
-          
-          Style.container,
-          {
-          
-            justifyContent: "center",
-            backgroundColor: Colors.green,
-          },
-        ]}
+        style={[ Style.container, Style.justifyCenter, { backgroundColor: Colors.green, }, ]}
       >
-        <View  style={[
-          Style.container,{backgroundColor: Colors[colorScheme].backgroundCard, padding: Sizes.semi}
-        ]}>
-          <View style={[Style.alignCenter]}>
-          <LogoSvg />
+        <View 
+          style={[Style.container,{backgroundColor: Colors[colorScheme].backgroundCard, padding: Sizes.full,}]}
+        >
+          <View 
+            style={[Style.alignCenter, Style.justifyCenter,]}
+          >
+            <LogoSvg />
           </View>
-          <Text style={[Style.h1,]}>
-            Le ticketing pour gagner en produtivité
+          <Text style={[Style.h1, {fontFamily: Fonts.robotoMedium}]}>
+            <Text style={{fontFamily: Fonts.montserratBold}}>Le ticketing</Text>  pour gagner en produtivité
           </Text>
         </View>
-        <View style={[Style.flexColumnNoWrap, { backgroundColor: Colors[colorScheme].tint, flex: 1 }]}>
-        <Button type="primary" onPress={() => navigation.navigate("Login")}>S'inscrire</Button>
-       <Button type="secondary" onPress={() => navigation.navigate("Register")}>S'enregistrer</Button>
-  
+        <View style={[Style.flexColumnNoWrap]}>
+          <Button type="primary" onPress={() => navigation.navigate("Login")}>S'inscrire</Button>
+          <Button type="secondary" onPress={() => navigation.navigate("Register")}>S'enregistrer</Button>
         </View>
       </View>
     </SafeAreaView>
