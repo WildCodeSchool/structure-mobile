@@ -15,10 +15,9 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   onPress,
 }) => {
   const typeBtn = type === "primary" ? Style.btnPrimary : Style.btnSecondary;
-  const textColor = type === "primary" ? Colors.white : Colors.green;
   return (
     <TouchableOpacity style={typeBtn} onPress={onPress}>
-        <Text style={[Style.btnText, {color: textColor} ]}>{children}</Text>
+      <Text style={[Style.btnText, { color: Colors.white }]}>{children}</Text>
     </TouchableOpacity>
   );
 };

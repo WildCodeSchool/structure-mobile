@@ -10,6 +10,7 @@ import { Button } from "../components/Button";
 import { View } from "react-native";
 import Sizes from "../constants/Sizes";
 import Fonts from "../constants/Fonts";
+import RocketSvg from "../components/svg/rocket";
 
 //S'IDENTIFIER
 export default function WelcomeScreen({
@@ -22,23 +23,59 @@ export default function WelcomeScreen({
       style={[{ backgroundColor: Colors[colorScheme].tint, flex: 1 }]}
     >
       <View
-        style={[ Style.container, Style.justifyCenter, { backgroundColor: Colors.green, }, ]}
+        style={[
+          Style.container,
+          Style.justifyCenter,
+          { backgroundColor: Colors.green },
+        ]}
       >
-        <View 
-          style={[Style.container,{backgroundColor: Colors[colorScheme].backgroundCard, padding: Sizes.full,}]}
+        <View
+          style={[
+            Style.container,
+            {
+              backgroundColor: Colors[colorScheme].backgroundCard,
+            },
+          ]}
         >
-          <View 
-            style={[Style.alignCenter, Style.justifyCenter,{marginVertical: Sizes.full}]}
-          >
-            <LogoSvg  style={{ transform: [{ rotate: '-10deg' }] }}/>
+          <View style={[Style.alignCenter, Style.justifyCenter, ,]}>
+            <LogoSvg
+              width={250}
+              style={{ transform: [{ rotate: "-10deg" }] }}
+            />
           </View>
-          <Text style={[Style.h1, {fontFamily: Fonts.robotoMedium, marginTop: Sizes.full}]}>
-            <Text style={{fontFamily: Fonts.montserratBold}}>Le ticketing</Text>  pour gagner en produtivité
-          </Text>
+          <View
+            style={[
+              Style.alignCenter,
+              Style.justifyCenter,
+              Style.flexRowNoWrap,
+            ]}
+          >
+            <Text
+              style={[
+                Style.h1,
+                {
+                  fontFamily: Fonts.robotoLight,
+                },
+              ]}
+            >
+              <Text style={{ fontFamily: Fonts.montserratBold }}>
+                Le ticketing
+              </Text>{" "}
+              pour{"\n"}gagner en {"\n"}produtivité
+            </Text>
+            <RocketSvg width={50} />
+          </View>
         </View>
         <View style={[Style.flexColumnNoWrap]}>
-          <Button type="primary" onPress={() => navigation.navigate("Login")}>S'inscrire</Button>
-          <Button type="secondary" onPress={() => navigation.navigate("Register")}>S'enregistrer</Button>
+          <Button type="secondary" onPress={() => navigation.navigate("Login")}>
+            Connexion
+          </Button>
+          <Button
+            type="primary"
+            onPress={() => navigation.navigate("Register")}
+          >
+            Inscription
+          </Button>
         </View>
       </View>
     </SafeAreaView>

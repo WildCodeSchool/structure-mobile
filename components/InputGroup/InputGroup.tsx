@@ -10,6 +10,8 @@ import {
   Path,
 } from "react-hook-form";
 import { Text, TextInput, View, StyleSheet } from "react-native";
+import Colors from "../../constants/Colors";
+import Style from "../../style/Style";
 // import { User } from "../../types";
 // import { RegisterFormData } from "../Auth/Register";
 
@@ -32,30 +34,20 @@ export const InputGroup = <T extends FieldValues>(
 ) => {
   return (
     <View>
-      <View>
-        <Text>{props.label}</Text>
-        <Controller
-          control={props.control}
-          rules={props.validators[props.field]}
-          name={props.field}
-          render={({ field: { onChange, value, onBlur } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-        />
-     </View>
-  </View>
+      <Text style={Style.label}>{props.label}</Text>
+      <Controller
+        control={props.control}
+        rules={props.validators[props.field]}
+        name={props.field}
+        render={({ field: { onChange, value, onBlur } }) => (
+          <TextInput
+            style={[Style.input]}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "red",
-  },
-});

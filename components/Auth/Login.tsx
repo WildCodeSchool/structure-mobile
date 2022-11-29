@@ -15,12 +15,18 @@ import {
   User,
   ValidatorForm,
 } from "../../types";
+import Style from "../../style/Style";
+import Colors from "../../constants/Colors";
+import useColorScheme from "../../hooks/useColorScheme";
+import Fonts from "../../constants/Fonts";
+import Sizes from "../../constants/Sizes";
 
 export interface LoginFormData extends Pick<User, "email" | "password"> {}
 
 type ValidatorLogin = ValidatorForm<keyof LoginFormData>;
 
 export default function Login() {
+  const colorScheme = useColorScheme();
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
   const [mutateLogin, { data, loading, error: ApolloError }] =
@@ -57,11 +63,11 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginFormData> = (payload) => {
     const setToken = async (token: string) => {
       try {
-        await AsyncStorage.setItem("token", token)
-      } catch(e) {
-        console.log(e)
+        await AsyncStorage.setItem("token", token);
+      } catch (e) {
+        console.log(e);
       }
-    }
+    };
 
     mutateLogin({
       variables: {
@@ -80,7 +86,12 @@ export default function Login() {
   };
 
   return (
-    <View>
+    <View
+      style={[
+        Style.container,
+        { backgroundColor: Colors[colorScheme].background },
+      ]}
+    >
       <InputGroup<LoginFormData>
         Controller={Controller}
         control={control}
@@ -89,7 +100,9 @@ export default function Login() {
         validators={validators}
         errors={errors}
       />
-      {errors.email && <Text>{errors.email?.message}</Text>}
+      {errors.email && (
+        <Text style={Style.errorText}>{errors.email?.message}</Text>
+      )}
 
       <InputGroup<LoginFormData>
         Controller={Controller}
@@ -99,7 +112,9 @@ export default function Login() {
         validators={validators}
         errors={errors}
       />
-      {errors.password && <Text>{errors.password?.message}</Text>}
+      {errors.password && (
+        <Text style={Style.errorText}>{errors.password?.message}</Text>
+      )}
 
       <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
     </View>

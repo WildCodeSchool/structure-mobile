@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import {useForm,Controller,SubmitHandler} from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { Button } from "../Button";
 import { IS_EXIST_USER, REGISTER_USER } from "../../apollo/queries";
@@ -13,6 +13,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContextType, RootTabParamList } from "../../types";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useRef } from "react";
+import Style from "../../style/Style";
+import Colors from "../../constants/Colors";
+import Fonts from "../../constants/Fonts";
+import Sizes from "../../constants/Sizes";
 
 export interface RegisterFormData
   extends Pick<User, "firstname" | "lastname" | "email" | "password"> {
@@ -124,14 +128,14 @@ export default function RegisterForm() {
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
     // on enlève confirmPassword de l'objet data
     const { confirmPassword, ...rest } = data;
-    
+
     const setToken = async (token: string) => {
       try {
-        await AsyncStorage.setItem("token", token)
-      } catch(e) {
-        console.log(e)
+        await AsyncStorage.setItem("token", token);
+      } catch (e) {
+        console.log(e);
       }
-    }
+    };
 
     const response = mutateRegister({ variables: { data: rest } });
     response
@@ -149,7 +153,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <View>
+    <View style={[Style.container]}>
       <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}
@@ -158,9 +162,11 @@ export default function RegisterForm() {
         validators={validators}
         errors={errors}
       />
-      {errors.firstname && <Text>{errors.firstname?.message}</Text>}
+      {errors.firstname && (
+        <Text style={Style.errorText}>{errors.firstname?.message}</Text>
+      )}
 
-			<InputGroup<RegisterFormData>
+      <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}
         field="lastname"
@@ -168,9 +174,11 @@ export default function RegisterForm() {
         validators={validators}
         errors={errors}
       />
-      {errors.lastname && <Text>{errors.lastname?.message}</Text>}
+      {errors.lastname && (
+        <Text style={Style.errorText}>{errors.lastname?.message}</Text>
+      )}
 
-			<InputGroup<RegisterFormData>
+      <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}
         field="email"
@@ -178,9 +186,11 @@ export default function RegisterForm() {
         validators={validators}
         errors={errors}
       />
-      {errors.email && <Text>{errors.email?.message}</Text>}
+      {errors.email && (
+        <Text style={Style.errorText}>{errors.email?.message}</Text>
+      )}
 
-			<InputGroup<RegisterFormData>
+      <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}
         field="password"
@@ -188,9 +198,11 @@ export default function RegisterForm() {
         validators={validators}
         errors={errors}
       />
-      {errors.password && <Text>{errors.password?.message}</Text>}
+      {errors.password && (
+        <Text style={Style.errorText}>{errors.password?.message}</Text>
+      )}
 
-			<InputGroup<RegisterFormData>
+      <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}
         field="confirmPassword"
@@ -198,9 +210,13 @@ export default function RegisterForm() {
         validators={validators}
         errors={errors}
       />
-      {errors.confirmPassword && <Text>{errors.confirmPassword?.message}</Text>}
+      {errors.confirmPassword && (
+        <Text style={Style.errorText}>{errors.confirmPassword?.message}</Text>
+      )}
 
-      <Button type="primary" onPress={handleSubmit(onSubmit)}>S'inscrire</Button>
+      <Button type="primary" onPress={handleSubmit(onSubmit)}>
+        S'inscrire
+      </Button>
     </View>
   );
 }
