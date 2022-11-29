@@ -1,7 +1,7 @@
 export default {
   semi: 15,
   full: 24,
-  xl : 40,
+  xl: 40,
   borderRadius: 15,
   fontH1: 28,
   fontH2: 25,
