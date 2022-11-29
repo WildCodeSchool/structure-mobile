@@ -28,11 +28,11 @@ export default function WelcomeScreen({
           style={[Style.container,{backgroundColor: Colors[colorScheme].backgroundCard, padding: Sizes.full,}]}
         >
           <View 
-            style={[Style.alignCenter, Style.justifyCenter,]}
+            style={[Style.alignCenter, Style.justifyCenter,{marginVertical: Sizes.full}]}
           >
-            <LogoSvg />
+            <LogoSvg  style={{ transform: [{ rotate: '-10deg' }] }}/>
           </View>
-          <Text style={[Style.h1, {fontFamily: Fonts.robotoMedium}]}>
+          <Text style={[Style.h1, {fontFamily: Fonts.robotoMedium, marginTop: Sizes.full}]}>
             <Text style={{fontFamily: Fonts.montserratBold}}>Le ticketing</Text>  pour gagner en produtivité
           </Text>
         </View>
