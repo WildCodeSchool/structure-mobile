@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, useColorScheme } from "react-native";
 import Colors from "../constants/Colors";
 import Sizes from "../constants/Sizes";
 import Fonts from "../constants/Fonts";
@@ -8,8 +8,8 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
   //display
   flex: { display: "flex" },
-  alignCenter: {display: "flex", alignItems:'center', },
-  justifyCenter: {display: "flex", justifyContent:'center',},
+  alignCenter: { display: "flex", alignItems: "center" },
+  justifyCenter: { display: "flex", justifyContent: "center" },
   flexRowNoWrap: { display: "flex", flexDirection: "row", flexWrap: "nowrap" },
   flexColumn: { display: "flex", flexDirection: "column", flexWrap: "wrap" },
   flexColumnNoWrap: {
@@ -27,8 +27,9 @@ export default StyleSheet.create({
   //container
   container: {
     marginVertical: 40,
-    marginHorizontal: Sizes.semi,
     borderRadius: Sizes.borderRadius,
+    paddingHorizontal: Sizes.full,
+    paddingVertical: Sizes.full,
   },
 
   cardContainer: {
@@ -54,30 +55,56 @@ export default StyleSheet.create({
   },
   h3: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH3 },
   text: { fontFamily: Fonts.robotoLight, fontSize: 12 },
+  errorText: {
+    color: Colors.rose,
+    fontFamily: Fonts.robotoLight,
+    fontSize: Sizes.fontH4,
+  },
 
   //buttons
   btnPrimary: {
-    backgroundColor: Colors.blue,
-    borderRadius: 30,
-    padding: 5,
-    border: 1, 
+    backgroundColor: Colors.green,
+    borderColor: Colors.white,
+    borderRadius: 2,
+    borderWidth: 1,
+    marginTop: Sizes.semi,
+    paddingHorizontal: Sizes.semi,
   },
 
   btnSecondary: {
-    backgroundColor: Colors.white,
-    borderRadius: 30,
-    padding: 5,
+    backgroundColor: Colors.blue,
+    borderRadius: 2,
     border: 1,
-    borderColor: Colors.green,
-    marginVertical: Sizes.semi
+    marginTop: Sizes.semi,
+    paddingHorizontal: Sizes.semi,
   },
 
   btnText: {
     fontFamily: Fonts.robotoMedium,
     fontSize: 20,
     textAlign: "center",
-    marginVertical: Sizes.semi
-  }
+    marginVertical: Sizes.semi,
+  },
 
+  //form
+  label: {
+    fontFamily: Fonts.robotoMedium,
+    fontSize: Sizes.fontH3,
+    color: Colors.blue,
+    marginTop: Sizes.semi,
+  },
 
+  input: {
+    borderWidth: 2,
+    borderColor: Colors.blueGray,
+    padding: Sizes.semi,
+    marginVertical: 5,
+  },
+
+  inputError: {
+    borderWidth: 3,
+    borderColor: Colors.rose,
+    padding: Sizes.semi,
+    marginVertical: 5,
+  },
 });
