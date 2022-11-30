@@ -17,6 +17,7 @@ import Style from "../../style/Style";
 import Colors from "../../constants/Colors";
 import Fonts from "../../constants/Fonts";
 import Sizes from "../../constants/Sizes";
+import useColorScheme from "../../hooks/useColorScheme";
 
 export interface RegisterFormData
   extends Pick<User, "firstname" | "lastname" | "email" | "password"> {
@@ -26,6 +27,7 @@ export interface RegisterFormData
 type ValidatorRegister = ValidatorForm<keyof RegisterFormData>;
 
 export default function RegisterForm() {
+  const colorScheme = useColorScheme();
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
   const [getisExistUser] = useLazyQuery<{ isExistUser: boolean }>(
@@ -153,7 +155,10 @@ export default function RegisterForm() {
   };
 
   return (
-    <View style={[Style.container]}>
+    <View style={[
+      Style.container,
+      { backgroundColor: Colors[colorScheme].background },
+    ]}>
       <InputGroup<RegisterFormData>
         Controller={Controller}
         control={control}

@@ -3,9 +3,10 @@ import Svg, { SvgProps, Path } from "react-native-svg";
 
 const HandSvg = (props: SvgProps) => (
   <Svg
-    width={104}
-    height={104}
-    viewBox="0 0 104 104"
+    width={100}
+    height={100}
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 100 100"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}

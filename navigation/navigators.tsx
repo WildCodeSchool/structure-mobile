@@ -69,7 +69,9 @@ export default function RootNavigator() {
         <Stack.Screen
           name="IsSignedIn"
           component={BottomTabNavigator}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,headerStyle: {
+            backgroundColor: Colors.green,
+          }, }}
         />
       )}
       <Stack.Screen
@@ -96,12 +98,14 @@ function WelcomeNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "Connexion" }}
+        options={{ title: "",headerStyle: {
+          backgroundColor: Colors.green}, }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ title: "Inscription" }}
+        options={{ title: "",headerStyle: {
+          backgroundColor: Colors.green}, }}
       />
     </Stack.Navigator>
   );

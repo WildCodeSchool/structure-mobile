@@ -24,9 +24,9 @@ export default function WelcomeScreen({
     >
       <View
         style={[
-          Style.container,
+         
           Style.justifyCenter,
-          { backgroundColor: Colors.green },
+          { backgroundColor: Colors.green, marginHorizontal: Sizes.semi },
         ]}
       >
         <View

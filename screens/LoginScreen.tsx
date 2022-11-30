@@ -16,11 +16,12 @@ export default function LoginScreen() {
         {
           backgroundColor: Colors[colorScheme].tint,
           flex: 1,
-          padding: Sizes.full,
+          paddingHorizontal: Sizes.semi,
+          justifyContent: "center",
         },
       ]}
     >
-      <View style={[Style.alignCenter, { marginVertical: Sizes.full }]}>
+      <View style={[Style.alignCenter, { }]}>
         <Text
           style={[
             Style.h2,
@@ -28,6 +29,7 @@ export default function LoginScreen() {
               fontFamily: Fonts.montserratBold,
               color: Colors.white,
               textAlign: "center",
+              paddingTop: Sizes.full,
             },
           ]}
         >
@@ -45,9 +47,9 @@ export default function LoginScreen() {
         >
           C'est par ici!
         </Text>
-        <HandSvg width={60} />
+        <HandSvg height={60} />
       </View>
-      <View style={{ marginVertical: Sizes.full }}>
+      <View style={{ marginBottom: Sizes.full }}>
         <Login />
       </View>
     </SafeAreaView>

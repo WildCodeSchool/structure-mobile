@@ -3,8 +3,8 @@ import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 
 const RocketSvg = (props: SvgProps) => (
   <Svg
-    width={83}
-    height={79}
+    width='100%'
+    height='100%'
     viewBox="0 0 83 79"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
