@@ -7,6 +7,7 @@ import { RootStackScreenProps } from "../types";
 import { TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
+import Sizes from "../constants/Sizes";
 
 export default function DashboardScreen({
   navigation,
@@ -32,16 +33,23 @@ export default function DashboardScreen({
   };
 
   return (
-    <View style={[Style.flexColumnNoWrap, Style.container]}>
+    <View
+      style={[
+        Style.flexColumnNoWrap,
+        { padding: Sizes.semi, paddingTop: Sizes.full, backgroundColor:},
+      ]}
+    >
       <View>
         <Text style={Style.h1}>Bonjour Username,</Text>
-        <Text style={[Style.text, { fontSize: 25, marginBottom: 15 }]}>
+        <Text
+          style={[Style.text, { fontSize: Sizes.fontH3, marginBottom: 15 }]}
+        >
           Voici tes projets en cours...
         </Text>
       </View>
       <View style={[{ marginVertical: 25 }]}>
         <Text style={Style.h2}>Mes projets</Text>
-        <Projects/>
+        <Projects />
       </View>
       <View>
         <Text style={Style.h2}>Mes tickets</Text>

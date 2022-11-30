@@ -155,72 +155,80 @@ export default function RegisterForm() {
   };
 
   return (
-    <View style={[
-      Style.container,
-      { backgroundColor: Colors[colorScheme].background },
-    ]}>
-      <InputGroup<RegisterFormData>
-        Controller={Controller}
-        control={control}
-        field="firstname"
-        label="Votre prénom"
-        validators={validators}
-        errors={errors}
-      />
-      {errors.firstname && (
-        <Text style={Style.errorText}>{errors.firstname?.message}</Text>
-      )}
-
-      <InputGroup<RegisterFormData>
-        Controller={Controller}
-        control={control}
-        field="lastname"
-        label="Votre nom"
-        validators={validators}
-        errors={errors}
-      />
-      {errors.lastname && (
-        <Text style={Style.errorText}>{errors.lastname?.message}</Text>
-      )}
-
-      <InputGroup<RegisterFormData>
-        Controller={Controller}
-        control={control}
-        field="email"
-        label="Votre email"
-        validators={validators}
-        errors={errors}
-      />
-      {errors.email && (
-        <Text style={Style.errorText}>{errors.email?.message}</Text>
-      )}
-
-      <InputGroup<RegisterFormData>
-        Controller={Controller}
-        control={control}
-        field="password"
-        label="Votre mot de passe"
-        validators={validators}
-        errors={errors}
-      />
-      {errors.password && (
-        <Text style={Style.errorText}>{errors.password?.message}</Text>
-      )}
-
-      <InputGroup<RegisterFormData>
-        Controller={Controller}
-        control={control}
-        field="confirmPassword"
-        label="Confirmez votre mot de passe"
-        validators={validators}
-        errors={errors}
-      />
-      {errors.confirmPassword && (
-        <Text style={Style.errorText}>{errors.confirmPassword?.message}</Text>
-      )}
+    <View
+      style={[
+        Style.container,
+        { backgroundColor: Colors[colorScheme].background },
+      ]}
+    >
+      <View>
+        <InputGroup<RegisterFormData>
+          Controller={Controller}
+          control={control}
+          field="firstname"
+          label="Votre prénom"
+          validators={validators}
+          errors={errors}
+        />
+        {errors.firstname && (
+          <Text style={Style.errorText}>{errors.firstname?.message}</Text>
+        )}
+      </View>
+      <View>
+        <InputGroup<RegisterFormData>
+          Controller={Controller}
+          control={control}
+          field="lastname"
+          label="Votre nom"
+          validators={validators}
+          errors={errors}
+        />
+        {errors.lastname && (
+          <Text style={Style.errorText}>{errors.lastname?.message}</Text>
+        )}
+      </View>
+      <View>
+        <InputGroup<RegisterFormData>
+          Controller={Controller}
+          control={control}
+          field="email"
+          label="Votre email"
+          validators={validators}
+          errors={errors}
+        />
+        {errors.email && (
+          <Text style={Style.errorText}>{errors.email?.message}</Text>
+        )}
+      </View>
+      <View>
+        <InputGroup<RegisterFormData>
+          Controller={Controller}
+          control={control}
+          field="password"
+          label="Votre mot de passe"
+          validators={validators}
+          errors={errors}
+        />
+        {errors.password && (
+          <Text style={Style.errorText}>{errors.password?.message}</Text>
+        )}
+      </View>
+      <View style={{ marginBottom: Sizes.full }}>
+        <InputGroup<RegisterFormData>
+          Controller={Controller}
+          control={control}
+          field="confirmPassword"
+          label="Confirmez votre mot de passe"
+          validators={validators}
+          errors={errors}
+        />
+        {errors.confirmPassword && (
+          <Text style={Style.errorText}>{errors.confirmPassword?.message}</Text>
+        )}
+      </View>
 
       <Button type="primary" onPress={handleSubmit(onSubmit)}>
-        S'inscrire
+        Inscription
       </Button>
     </View>
   );

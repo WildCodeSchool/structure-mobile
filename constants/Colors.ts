@@ -21,6 +21,7 @@ export default {
   light: {
     text: blue,
     background: blueGray50,
+    header: white,
     backgroundCard: white,
     tint: green,
     tabIconDefault: gray,
@@ -31,6 +32,7 @@ export default {
   dark: {
     text: "#fff",
     background: "#000",
+    header: darkGray,
     backgroundCard: darkGray,
     tint: green,
     tabIconDefault: "#ccc",

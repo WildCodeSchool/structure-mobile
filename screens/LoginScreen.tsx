@@ -17,11 +17,11 @@ export default function LoginScreen() {
           backgroundColor: Colors[colorScheme].tint,
           flex: 1,
           paddingHorizontal: Sizes.semi,
-          justifyContent: "center",
+          justifyContent: "space-around",
         },
       ]}
     >
-      <View style={[Style.alignCenter, { }]}>
+      <View style={[Style.alignCenter]}>
         <Text
           style={[
             Style.h2,

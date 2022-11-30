@@ -116,7 +116,7 @@ export default function Login() {
         <Text style={Style.errorText}>{errors.password?.message}</Text>
       )}
 
-      <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
+      <Button onPress={handleSubmit(onSubmit)}>Connexion</Button>
     </View>
   );
 }

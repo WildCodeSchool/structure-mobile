@@ -39,7 +39,7 @@ export default StyleSheet.create({
     padding: Sizes.semi,
   },
   header: {
-    fontSize: Sizes.fontH2,
+    fontSize: Sizes.fontH3,
     fontFamily: Fonts.montserratBold,
   },
   //text

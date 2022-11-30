@@ -8,20 +8,20 @@ import useColorScheme from "../hooks/useColorScheme";
 import Style from "../style/Style";
 
 export default function RegisterScreen() {
-    const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   return (
     <SafeAreaView
-    style={[
-      {
-        backgroundColor: Colors[colorScheme].tint,
-        flex: 1,
-        paddingHorizontal: Sizes.semi,
-        justifyContent: "center",
-      },
-    ]}
+      style={[
+        {
+          backgroundColor: Colors[colorScheme].tint,
+          flex: 1,
+          paddingHorizontal: Sizes.semi,
+          justifyContent: "center",
+        },
+      ]}
     >
       <ScrollView>
-        <View style={[Style.alignCenter, { }]}>
+        <View style={[Style.alignCenter]}>
           <Text
             style={[
               Style.h2,
@@ -33,7 +33,7 @@ export default function RegisterScreen() {
               },
             ]}
           >
-            Créez votre compte, 
+            Créez votre compte,
           </Text>
           <Text
             style={[
@@ -48,8 +48,10 @@ export default function RegisterScreen() {
             C'est gratuit!
           </Text>
         </View>
-        <View style={{ marginBottom: Sizes.full }}>
-        <Register />
+        <View
+          style={{ marginBottom: Sizes.semi, marginHorizontal: Sizes.semi }}
+        >
+          <Register />
         </View>
       </ScrollView>
     </SafeAreaView>

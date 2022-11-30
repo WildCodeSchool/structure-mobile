@@ -63,15 +63,23 @@ export default function RootNavigator() {
         <Stack.Screen
           name="IsNotSignedIn"
           component={WelcomeNavigator}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: Colors.green,
+            },
+          }}
         />
       ) : (
         <Stack.Screen
           name="IsSignedIn"
           component={BottomTabNavigator}
-          options={{ headerShown: false,headerStyle: {
-            backgroundColor: Colors.green,
-          }, }}
+          options={{
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: Colors.green,
+            },
+          }}
         />
       )}
       <Stack.Screen
@@ -98,14 +106,18 @@ function WelcomeNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "",headerStyle: {
-          backgroundColor: Colors.green}, }}
+        options={{
+          title: "",
+          headerTintColor: Colors.white,
+        }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ title: "",headerStyle: {
-          backgroundColor: Colors.green}, }}
+        options={{
+          title: "",
+          headerTintColor: Colors.white,
+        }}
       />
     </Stack.Navigator>
   );
@@ -126,7 +138,7 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerStyle: {
-          backgroundColor: Colors[colorScheme].background,
+          backgroundColor: Colors[colorScheme].header,
           elevation: 10,
         },
         headerTintColor: Colors[colorScheme].text,
@@ -162,6 +174,7 @@ function BottomTabNavigator() {
         name="Projects"
         component={ProjectStack}
         options={{
+          headerLeft: () => <TicketHeader />,
           title: "Mes projets",
           tabBarIcon: ({ color }) => <TabBarIcon name="trello" color={color} />,
         }}
@@ -171,6 +184,7 @@ function BottomTabNavigator() {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerLeft: () => <TicketHeader />,
           title: "Profil",
           tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
         }}
@@ -201,7 +215,7 @@ function DashboardStack() {
       />
       <Stack.Screen
         options={{
-          headerShown: true,
+          headerShown: false,
           headerBackTitleVisible: false,
           headerTintColor: Colors.green,
         }}
@@ -211,6 +225,7 @@ function DashboardStack() {
       <Stack.Screen
         options={{
           headerShown: true,
+          headerTitle: "",
           headerBackTitleVisible: false,
           headerTintColor: Colors.green,
         }}
@@ -224,9 +239,32 @@ function DashboardStack() {
 function ProjectStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Projects_list" component={ListProjectsScreen} />
-      <Stack.Screen name="Project_details" component={ProjectDetailScreen} />
-      <Stack.Screen name="Create_project" component={CreateProjectScreen} />
+      <Stack.Screen
+        options={{
+          headerTitle: "",
+          headerBackTitleVisible: false,
+          headerTintColor: Colors.green,
+        }}
+        name="Projects_list"
+        component={ListProjectsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerTintColor: Colors.green,
+        }}
+        name="Project_details"
+        component={ProjectDetailScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerBackTitleVisible: false,
+          headerTintColor: Colors.green,
+        }}
+        name="Create_project"
+        component={CreateProjectScreen}
+      />
     </Stack.Navigator>
   );
 }
