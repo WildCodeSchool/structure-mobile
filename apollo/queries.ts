@@ -3,11 +3,11 @@ import { gql } from "@apollo/client";
 
 //----------------------AUTH--------------------------------
 
-export const LOGIN_MUTATION = gql`
-  mutation Mutation($data: LoginInput!) {
-    login(data: $data)
-  }
-`;
+export const LOGIN_QUERY = gql`
+query Login($data: LoginInput!) {
+	login(data: $data)
+}
+`
 
 //----------------------USER--------------------------------
 
@@ -46,6 +46,32 @@ export const GET_PROJECTS = gql`
 		}
 	}
 `
+
+export const GET_PROJECT = gql`
+	query GetProject($where: ProjectWhereUniqueInput!) {
+		project(where: $where) {
+			id
+			code
+			title
+			subject
+			tickets {
+				id
+				title
+				updatedAt
+				priority
+				status
+				labels {
+					name
+				}
+				user_author {
+					firstname
+					lastname
+				}
+			}
+		}
+}
+`
+
 export const CREATE_PROJECT = gql`
 mutation CreateProject($data: ProjectCreateInput!) {
   createProject(data: $data) {

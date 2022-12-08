@@ -36,7 +36,7 @@ export default function DashboardScreen({
     <View
       style={[
         Style.flexColumnNoWrap,
-        { padding: Sizes.semi, paddingTop: Sizes.full, backgroundColor:},
+        { padding: Sizes.semi, paddingTop: Sizes.full},
       ]}
     >
       <View>

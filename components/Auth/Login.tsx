@@ -3,8 +3,8 @@ import { Text, View, StyleSheet } from "react-native";
 import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { LOGIN_MUTATION } from "../../apollo/queries";
-import { useMutation } from "@apollo/client";
+import { LOGIN_QUERY } from "../../apollo/queries";
+import { useLazyQuery, } from "@apollo/client";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,7 +30,7 @@ export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
   const [mutateLogin, { data, loading, error: ApolloError }] =
-    useMutation(LOGIN_MUTATION);
+    useLazyQuery(LOGIN_QUERY);
 
   const {
     control,
