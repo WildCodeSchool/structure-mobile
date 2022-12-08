@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet } from "react-native";
 import CreateProject from "../../components/Project/CreateProject";
 import { Text, View } from "../../components/Themed";

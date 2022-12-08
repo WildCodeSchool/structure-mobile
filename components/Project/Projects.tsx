@@ -20,14 +20,18 @@ import { Project } from "../../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "../../constants/Colors";
 
-export default function Projects({ navigation }: any) {
+export default function Projects() {
+  const navigation = useNavigation();
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
       setProjects(data.projects);
     },
   });
+
   const {
     data: getUser,
     loading: loadingGetUser,
@@ -51,7 +55,7 @@ export default function Projects({ navigation }: any) {
   if (loading)
     return (
       <View>
-           <ActivityIndicator size="large" color={Colors.green} />
+        <ActivityIndicator size="large" color={Colors.green} />
       </View>
     );
   if (error)
@@ -64,22 +68,38 @@ export default function Projects({ navigation }: any) {
     return <Text>Vous n'avez pas de projet pour l'isntant !</Text>;
 
   return (
-      <FlatList
-        data={projects}
-        keyExtractor={(item) => item.id.toString()}
-        refreshing={refreshing}
-        onRefresh={handleRefresh}
-        numColumns={2}
-        renderItem={({ item }) => (
+    <FlatList
+      data={projects}
+      keyExtractor={(item) => item.id.toString()}
+      refreshing={refreshing}
+      onRefresh={handleRefresh}
+      numColumns={2}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Project_details", {
+              projectId: item.id,
+              title: item.title,
+              subject: item.subject,
+              code: item.code,
+              createdAt: item.createdAt, 
+              updatedAt: item.updatedAt, 
+              tickets: item.tickets, 
+              members: item.members, 
+              user_author_project: item.user_author_project,
+              user_author_project_id: item.user_author_project_id 
+            })
+          }
+        >
           <ProjectCard
             id={item.id}
             title={item.title}
             subject={item.subject}
             createdAt={item.createdAt}
-            onPress={() => console.log("coucou")}
           />
-        )}
-      />
+        </TouchableOpacity>
+      )}
+    />
   );
 }
 

@@ -23,7 +23,6 @@ export default function ProjectCard({
   title,
   subject,
   createdAt,
-  onPress,
 }) {
   return (
     <View style={styles.project}>

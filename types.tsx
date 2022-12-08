@@ -32,9 +32,10 @@ export type RootStackParamList = {
   Create_ticket: undefined;
   Ticket_details: undefined;
   Projects_list: undefined;
-  Project_details: undefined;
   Create_project: undefined;
+  Project_details: { projectId: number, title: string, subject: string, code: string, createdAt: Date, updatedAt: Date, tickets: Ticket[], members: User[], user_author_project: User, user_author_project_id: number };
 };
+
 //Props des Screen de "RootNavigator"
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;

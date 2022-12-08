@@ -43,6 +43,7 @@ export const GET_PROJECTS = gql`
 			id
 			subject
 			title
+			code
 		}
 	}
 `

@@ -29,7 +29,7 @@ export default function Login() {
   const colorScheme = useColorScheme();
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
-  const [mutateLogin, { data, loading, error: ApolloError }] =
+  const [queryLogin, { data, loading, error: ApolloError }] =
     useLazyQuery(LOGIN_QUERY);
 
   const {
@@ -69,7 +69,7 @@ export default function Login() {
       }
     };
 
-    mutateLogin({
+    queryLogin({
       variables: {
         data: payload,
       },

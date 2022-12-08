@@ -5,6 +5,7 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { client } from "./apollo/config";
+import React from "react";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

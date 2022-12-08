@@ -11,7 +11,6 @@ export default function ProjectsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mes projets</Text>
       <Projects />
       <View style={styles.buttonAddProject}>
       <Button  title="+" onPress={() => navigation.navigate("Create_project")} />
