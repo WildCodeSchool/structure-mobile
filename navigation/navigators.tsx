@@ -241,7 +241,7 @@ function ProjectStack() {
     <Stack.Navigator>
       <Stack.Screen
         options={{
-          headerTitle: "",
+          headerShown: false,
           headerBackTitleVisible: false,
           headerTintColor: Colors.green,
         }}

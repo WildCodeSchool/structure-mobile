@@ -21,7 +21,7 @@ export interface CreateProjectForm
 type ValidatorCreateProjectForm = ValidatorForm<keyof CreateProjectForm>;
 
 export default function CreateProjectForm() {
-  const navigation = useNavigation<RootTabParamList>();
+  const navigation = useNavigation();
   const [isSubmited, setIsSubmited] = useState<boolean>(false);
 
   // -------------- Controles formulaire  ---------------------
@@ -64,9 +64,8 @@ export default function CreateProjectForm() {
     },
   };
 
-
-// -------------- Envoi du projet  ---------------------
-  const [getMe,{loading: loadingGetId}] = useLazyQuery<MeData>(GET_ME)
+  // -------------- Envoi du projet  ---------------------
+  const [getMe, { loading: loadingGetId }] = useLazyQuery<MeData>(GET_ME);
   const [createProjectMutation, { loading, error: ApolloError }] = useMutation(
     CREATE_PROJECT,
     {
@@ -78,17 +77,23 @@ export default function CreateProjectForm() {
 
   const onSubmit: SubmitHandler<CreateProjectForm> = async (payload) => {
     await getMe()
-      .then(({ data }) => addProject(data, payload))
+      .then(({ data }) => {
+        addProject(data, payload);
+        navigation.navigate("Projects_list");
+      })
       .catch((err) => console.log(err));
 
-    async function addProject(data: MeData | undefined, payload: CreateProjectForm){
+    async function addProject(
+      data: MeData | undefined,
+      payload: CreateProjectForm
+    ) {
       const project = {
         ...payload,
         user_author_project: {
           connect: {
             id: data?.me.id,
           },
-        }
+        },
       };
       console.log(payload, data?.me.id);
       await createProjectMutation({ variables: { data: project } });

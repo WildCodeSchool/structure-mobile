@@ -82,12 +82,12 @@ export default function Projects() {
               title: item.title,
               subject: item.subject,
               code: item.code,
-              createdAt: item.createdAt, 
-              updatedAt: item.updatedAt, 
-              tickets: item.tickets, 
-              members: item.members, 
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+              tickets: item.tickets,
+              members: item.members,
               user_author_project: item.user_author_project,
-              user_author_project_id: item.user_author_project_id 
+              user_author_project_id: item.user_author_project_id,
             })
           }
         >
