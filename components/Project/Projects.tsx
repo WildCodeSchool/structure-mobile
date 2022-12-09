@@ -70,10 +70,11 @@ export default function Projects() {
   return (
     <FlatList
       data={projects}
+      horizontal={true}
+      showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id.toString()}
       refreshing={refreshing}
       onRefresh={handleRefresh}
-      numColumns={2}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() =>
@@ -102,10 +103,3 @@ export default function Projects() {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});

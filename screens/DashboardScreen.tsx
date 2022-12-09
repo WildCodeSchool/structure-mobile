@@ -8,6 +8,7 @@ import { TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
+import { GET_ME, GET_PROJECT } from "../apollo/queries";
 
 export default function DashboardScreen({
   navigation,
@@ -36,7 +37,7 @@ export default function DashboardScreen({
     <View
       style={[
         Style.flexColumnNoWrap,
-        { padding: Sizes.semi, paddingTop: Sizes.full},
+        { padding: Sizes.semi, paddingTop: Sizes.full },
       ]}
     >
       <View>

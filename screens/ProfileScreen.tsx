@@ -2,20 +2,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
-import { Button } from "react-native";
 import { AuthContext } from "../context/AuthContext";
-import { AuthContextType } from "../types";
+import { AuthContextType, RootStackParamList } from "../types";
 import App from "../App";
 import { client } from "../apollo/config";
+import { Button } from "../components/Button";
+import React from "react";
+import navigation from "../navigation";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ProfileScreen() {
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const signOut = async () => {
     //... setAuthData
     try {
       await AsyncStorage.removeItem("token");
       setSignedIn(false);
-      client.resetStore()
+      client.resetStore();
     } catch (err) {
       console.log(err);
     }
@@ -28,10 +35,9 @@ export default function ProfileScreen() {
       <Text style={styles.title}>Profile</Text>
 
       <Text>Bla bla bla bla bla </Text>
-      <Button
-        title="Déconnexion"
-        onPress={signOut}
-      />
+      <Button type="secondary" onPress={() => navigation.navigate("Login")}>
+        Déconnexion
+      </Button>
     </View>
   );
 }

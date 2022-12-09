@@ -4,7 +4,7 @@ import { InputGroup } from "../InputGroup";
 import { Button } from "../Button";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { LOGIN_QUERY } from "../../apollo/queries";
-import { useLazyQuery, } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
