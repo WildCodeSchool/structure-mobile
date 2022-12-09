@@ -1,35 +1,27 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import style from "../../style/Style";
 import CreateProject from "../../components/Project/CreateProject";
 import { Text, View } from "../../components/Themed";
+import Style from "../../style/Style";
+import Sizes from "../../constants/Sizes";
+import Colors from "../../constants/Colors";
 
 export default function CreateProjectScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Nouveau projet</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <CreateProject/>
+    <View
+      style={[
+        Style.container,
+        Style.justifyCenter,
+        {
+          marginBottom: Sizes.semi,
+          marginHorizontal: Sizes.semi,
+          borderColor: Colors.blueGrayLight,
+          borderWidth: 1,
+        },
+      ]}
+    >
+      <Text style={[Style.h2, { textAlign: "center" }]}>Créer un projet</Text>
+      <CreateProject />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
