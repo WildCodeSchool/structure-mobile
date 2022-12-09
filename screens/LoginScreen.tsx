@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Login from "../components/Auth/Login";
@@ -17,7 +18,7 @@ export default function LoginScreen() {
           backgroundColor: Colors[colorScheme].tint,
           flex: 1,
           paddingHorizontal: Sizes.semi,
-          justifyContent: "space-around",
+          justifyContent: "center",
         },
       ]}
     >

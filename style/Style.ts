@@ -34,10 +34,25 @@ export default StyleSheet.create({
 
   cardContainer: {
     borderColor: Colors.green,
-    borderWidth: 1,
-    borderRadius: Sizes.semi,
+    backgroundColor: Colors.white,
+    borderWidth: 1.5,
+    borderRadius: 5,
     padding: Sizes.semi,
+    marginRight: Sizes.semi,
+    width: width / 2.1 - Sizes.semi * 2,
+    height: 150,
   },
+
+  ticketContainer: {
+    borderColor: Colors.green,
+    backgroundColor: Colors.white,
+    borderWidth: 1.5,
+    borderRadius: 5,
+    padding: Sizes.semi,
+    marginBottom: Sizes.semi,
+    height: 60,
+  },
+
   header: {
     fontSize: Sizes.fontH3,
     fontFamily: Fonts.montserratBold,
@@ -54,7 +69,7 @@ export default StyleSheet.create({
     marginBottom: Sizes.semi,
   },
   h3: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH3 },
-  text: { fontFamily: Fonts.robotoLight, fontSize: 12 },
+  text: { fontFamily: Fonts.robotoLight, fontSize: 14 },
   errorText: {
     color: Colors.rose,
     fontFamily: Fonts.robotoLight,

@@ -96,12 +96,20 @@ export default function RootNavigator() {
 
 //Routes pour l'auhtentification
 function WelcomeNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTransparent: true,
+        headerBackTitleVisible: false,
+      }}
+    >
       <Stack.Screen
         name="Welcome"
         component={WelcomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="Login"
@@ -186,7 +194,7 @@ function BottomTabNavigator() {
         options={{
           headerLeft: () => <TicketHeader />,
           title: "Profil",
-          tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </BottomTab.Navigator>
