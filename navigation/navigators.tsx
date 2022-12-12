@@ -183,7 +183,7 @@ function BottomTabNavigator() {
         component={ProjectStack}
         options={{
           headerLeft: () => <TicketHeader />,
-          title: "Mes projets",
+          title: "Projets",
           tabBarIcon: ({ color }) => <TabBarIcon name="trello" color={color} />,
         }}
       />

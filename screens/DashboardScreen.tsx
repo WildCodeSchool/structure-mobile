@@ -8,29 +8,97 @@ import { TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
-import { GET_ME, GET_PROJECT } from "../apollo/queries";
+import { GET_ME, GET_PROJECTS } from "../apollo/queries";
+import {
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { useQuery } from "@apollo/client";
+import { useNavigation } from "@react-navigation/native";
+import ProjectCard from "../components/Project/ProjectCard";
+import { Project } from "../types";
 
 export default function DashboardScreen({
   navigation,
 }: RootStackScreenProps<"Dashboard">) {
   const colorScheme = useColorScheme();
-  const [name, setName] = useState("");
-  const [userId, setuserId] = useState("");
+
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
+    onCompleted: (data) => {
+      setProjects(data.projects);
+    },
+  });
+
+  const {
+    data: getUser,
+    loading: loadingGetUser,
+    error: errorGetUser,
+  } = useQuery(GET_ME);
+
+  const handleRefresh = async () => {
+    refetch();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  };
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    try {
-      AsyncStorage.getItem("UserName").then((value) => {
-        if (value != null) setName(value);
-
-        setName("");
-      });
-    } catch (error) {
-      console.log(error);
+    if (!loading) {
+      setProjects(data.projects);
     }
+  }, [loading]);
+
+  const projectsList = () => {
+    if (error)
+      return (
+        <View>
+          <Text>Erreur lors du chargement des projets...</Text>
+        </View>
+      );
+    if (projects.length === 0)
+      return <Text>Vous n'avez pas de projet pour le moment !</Text>;
+
+    <FlatList
+      data={projects}
+      horizontal={true}
+      showsVerticalScrollIndicator={false}
+      keyExtractor={(item) => item.id.toString()}
+      refreshing={refreshing}
+      onRefresh={handleRefresh}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Project_details", {
+              projectId: item.id,
+              title: item.title,
+              subject: item.subject,
+              code: item.code,
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+              tickets: item.tickets,
+              members: item.members,
+              user_author_project: item.user_author_project,
+              user_author_project_id: item.user_author_project_id,
+            })
+          }
+        >
+          <ProjectCard
+            id={item.id}
+            title={item.title}
+            subject={item.subject}
+            createdAt={item.createdAt}
+          />
+        </TouchableOpacity>
+      )}
+    />;
   };
 
   return (
@@ -45,19 +113,26 @@ export default function DashboardScreen({
         <Text
           style={[Style.text, { fontSize: Sizes.fontH3, marginBottom: 15 }]}
         >
-          Voici tes projets en cours...
+          Voici tes taches en cours...
         </Text>
       </View>
       <View style={[{ marginVertical: 25 }]}>
         <Text style={Style.h2}>Mes projets</Text>
-        <Projects />
+
+        {!loading ? (
+          projectsList()
+        ) : (
+          <View>
+            <ActivityIndicator size="large" color={Colors.green} />
+          </View>
+        )}
       </View>
       <View>
         <Text style={Style.h2}>Mes tickets</Text>
 
         <TouchableOpacity
           style={[
-            Style.cardContainer,
+            Style.ticketContainer,
             { backgroundColor: Colors[colorScheme].backgroundCard },
           ]}
           onPress={() => navigation.navigate("Ticket_details")}
