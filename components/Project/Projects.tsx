@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,17 +8,17 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { GET_ME, GET_PROJECTS } from "../../apollo/queries";
-import { useQuery } from "@apollo/client";
-import Style from "../../style/Style";
-import navigation from "../../navigation";
-import { useNavigation } from "@react-navigation/native";
-import ProjectCard from "./ProjectCard";
-import { Project } from "../../types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Colors from "../../constants/Colors";
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { GET_ME, GET_PROJECTS } from '../../apollo/queries';
+import { useQuery } from '@apollo/client';
+import Style from '../../style/Style';
+import navigation from '../../navigation';
+import { useNavigation } from '@react-navigation/native';
+import ProjectCard from './ProjectCard';
+import { Project } from '../../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from '../../constants/Colors';
 
 export default function Projects() {
   const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function Projects() {
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
-      setProjects(data.projects);
+      setProjects(data?.projects ?? []);
     },
   });
 
@@ -48,14 +48,14 @@ export default function Projects() {
 
   useEffect(() => {
     if (!loading) {
-      setProjects(data.projects);
+      setProjects(data?.projects ?? []);
     }
   }, [loading]);
 
   if (loading)
     return (
       <View>
-        <ActivityIndicator size="large" color={Colors.green} />
+        <ActivityIndicator size='large' color={Colors.green} />
       </View>
     );
   if (error)
@@ -78,7 +78,7 @@ export default function Projects() {
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Project_details", {
+            navigation.navigate('Project_details', {
               projectId: item.id,
               title: item.title,
               subject: item.subject,
