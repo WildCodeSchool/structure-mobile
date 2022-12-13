@@ -39,6 +39,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: Sizes.semi,
     marginRight: Sizes.semi,
+    marginBottom: Sizes.semi,
     width: width / 2.1 - Sizes.semi * 2,
     height: 150,
   },

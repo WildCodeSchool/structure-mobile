@@ -4,7 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useLazyQuery, useMutation } from "@apollo/client";
 
-import { CREATE_PROJECT, GET_ME } from "../../apollo/queries";
+import { CREATE_PROJECT } from "../../apollo/mutation";
+import { GET_ME } from "../../apollo/queries";
 
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button } from "../Button";
