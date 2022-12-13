@@ -17,6 +17,7 @@ export default function CreateProjectScreen() {
           marginHorizontal: Sizes.semi,
           borderColor: Colors.blueGrayLight,
           borderWidth: 1,
+          backgroundColor: Colors.white,
         },
       ]}
     >

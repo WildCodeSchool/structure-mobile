@@ -105,7 +105,12 @@ export default function DashboardScreen({
     <View
       style={[
         Style.flexColumnNoWrap,
-        { padding: Sizes.semi, paddingTop: Sizes.full },
+        {
+          padding: Sizes.semi,
+          paddingTop: Sizes.full,
+          backgroundColor: Colors.blueGrayLight,
+          flex: 1,
+        },
       ]}
     >
       <View>

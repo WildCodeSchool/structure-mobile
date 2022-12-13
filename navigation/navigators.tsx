@@ -146,7 +146,6 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerStyle: {
-          backgroundColor: Colors[colorScheme].header,
           elevation: 10,
         },
         headerTintColor: Colors[colorScheme].text,
@@ -215,7 +214,12 @@ function DashboardStack() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        contentStyle: { backgroundColor: Colors[colorScheme].background },
+        headerTransparent: true,
+      }}
+    >
       <Stack.Screen
         options={{ headerShown: false }}
         name="Dashboard"
@@ -246,7 +250,11 @@ function DashboardStack() {
 
 function ProjectStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTransparent: true,
+      }}
+    >
       <Stack.Screen
         options={{
           headerShown: false,
