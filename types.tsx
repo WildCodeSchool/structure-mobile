@@ -33,7 +33,9 @@ export type RootStackParamList = {
   Ticket_details: undefined;
   Projects_list: undefined;
   Create_project: undefined;
-  Project_details: { projectId: number, title: string, subject: string, code: string, createdAt: Date, updatedAt: Date, tickets: Ticket[], members: User[], user_author_project: User, user_author_project_id: number };
+  Project_details: {
+    projectId: number;
+  };
 };
 
 //Props des Screen de "RootNavigator"
@@ -144,8 +146,8 @@ export interface Label {
 }
 
 export enum Role {
-  USER = "LOW",
-  ADMIN = "USER",
+  USER = "USER",
+  ADMIN = "ADMIN",
 }
 
 export enum Status {
@@ -187,4 +189,3 @@ export interface ProjectData {
 export interface MeData {
   me: User;
 }
-

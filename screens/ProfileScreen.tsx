@@ -34,7 +34,7 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
 
-      <Button type="secondary" onPress={() => navigation.navigate("Login")}>
+      <Button type="secondary" onPress={() => signOut()}>
         Déconnexion
       </Button>
     </View>
