@@ -3,12 +3,12 @@ import Colors from "../constants/Colors";
 import Style from "../style/Style";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Role, RootStackScreenProps } from "../types";
+import { Role, RootStackScreenProps, Ticket } from "../types";
 import { TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
-import { GET_ME, GET_PROJECTS } from "../apollo/queries";
+import { GET_ME, GET_PROJECTS, GET_TICKETS } from "../apollo/queries";
 import {
   SafeAreaView,
   StyleSheet,
@@ -30,11 +30,23 @@ export default function DashboardScreen({
   const colorScheme = useColorScheme();
   const { isAllowed, authedUser } = useGuardByRoles([Role.ADMIN, Role.USER]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
       setProjects(data.projects);
+    },
+  });
+
+  const {
+    data: dataTickets,
+    loading: loadingTickets,
+    error: errorTickets,
+    refetch: refetchTickets,
+  } = useQuery(GET_TICKETS, {
+    onCompleted: (data) => {
+      setTickets(data.tickets);
     },
   });
 
@@ -46,6 +58,7 @@ export default function DashboardScreen({
 
   const handleRefresh = async () => {
     refetch();
+    refetchTickets();
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -53,10 +66,10 @@ export default function DashboardScreen({
   };
 
   useEffect(() => {
-    if (!loading) {
-      setProjects(data.projects);
+    if (!loading && !loadingTickets) {
+      setProjects(data.projects, dataTickets.tickets);
     }
-  }, [loading]);
+  }, [loading, loadingTickets]);
 
   const projectsList = () => {
     if (error)

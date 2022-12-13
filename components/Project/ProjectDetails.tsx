@@ -1,29 +1,34 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useLazyQuery } from "@apollo/client";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import { Text, View } from "react-native";
+import { GET_PROJECT } from "../../apollo/queries";
+import {
+  ProjectData,
+  RootStackParamList,
+  RootStackScreenProps,
+} from "../../types";
 
 export default function ProjectDetails() {
+  const route = useRoute();
+  const projectId = route.params != undefined ? route.params?.projectId : null;
+
+  const [getProject, { data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
+    variables: {
+      where: {
+        id: Number(projectId),
+      },
+    },
+  });
+
+  useEffect(() => {
+    getProject();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Je suis un super projet avec plein de tickets !
-      </Text>
+    <View>
+      <Text>{data?.project.title}</Text>
+      <Text>Voici la page de détails du projet </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "500",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
