@@ -3,8 +3,13 @@ import Colors from "../constants/Colors";
 import Style from "../style/Style";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Role, RootStackScreenProps, Ticket } from "../types";
-import { RefreshControl, ScrollView, TouchableOpacity, View } from "react-native";
+import { Role, RootStackScreenProps, Ticket, User } from "../types";
+import {
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
@@ -24,6 +29,7 @@ import { Project } from "../types";
 import { UserInterfaceIdiom } from "expo-constants";
 import { useGuardByRoles } from "../hooks/useGuardByRoles";
 import TicketCard from "../components/Ticket/TicketCard";
+import { get } from "react-hook-form";
 
 export default function DashboardScreen({
   navigation,
@@ -124,7 +130,7 @@ export default function DashboardScreen({
               id={ticket.id}
               title={ticket.title}
               createdAt={ticket.createdAt}
-              status={ticket.status}
+              priority={ticket.priority}
               project={ticket.project}
             />
           ))}
