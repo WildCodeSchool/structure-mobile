@@ -53,6 +53,7 @@ export const GET_PROJECTS = gql`
       createdAt
       updatedAt
       tickets {
+        id
         status
       }
       members {

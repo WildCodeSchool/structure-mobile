@@ -43,12 +43,18 @@ export default function ProjectsScreen() {
   };
 
   useEffect(() => {
-    if (!loading) {
-      setProjects(data.projects);
-    }
+    handleRefresh();
+    setProjects(data.projects);
   }, []);
 
   const projectList = () => {
+    if (loading){
+      return (
+        <View>
+          <Text>Chargement des projets...</Text>
+        </View>
+      );
+    }
     if (error)
       return (
         <View>
