@@ -28,7 +28,7 @@ export default function Projects() {
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
-      setProjects(data?.projects ?? []);
+      setProjects(data.projects);
     },
   });
 
@@ -47,10 +47,8 @@ export default function Projects() {
   };
 
   useEffect(() => {
-    if (!loading) {
-      setProjects(data?.projects ?? []);
-    }
-  }, [loading]);
+    handleRefresh();
+  }, []);
 
   if (loading)
     return (
@@ -97,6 +95,7 @@ export default function Projects() {
             title={item.title}
             subject={item.subject}
             createdAt={item.createdAt}
+            tickets={item.tickets}
           />
         </TouchableOpacity>
       )}

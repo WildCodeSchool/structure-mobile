@@ -18,8 +18,6 @@ import {
 import Style from "../../style/Style";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import Fonts from "../../constants/Fonts";
-import Sizes from "../../constants/Sizes";
 
 export interface LoginFormData extends Pick<User, "email" | "password"> {}
 
@@ -29,8 +27,14 @@ export default function Login() {
   const colorScheme = useColorScheme();
   const navigation = useNavigation<RootTabParamList>();
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
-  const [queryLogin, { data, loading, error: ApolloError }] =
-    useLazyQuery(LOGIN_QUERY);
+  const [queryLogin, { data, loading, error: ApolloError }] = useLazyQuery(
+    LOGIN_QUERY,
+    {
+      onCompleted: (data) => {
+        console.log(data);
+      },
+    }
+  );
 
   const {
     control,
@@ -74,11 +78,12 @@ export default function Login() {
         data: payload,
       },
     })
-      .then((data) => {
-        if (data) {
-          const token = data.data.login;
+      .then((res) => {
+        if (res.data) {
+          const token = res.data.login;
           setToken(token);
           setSignedIn(true);
+          console.log("token", token);
           navigation.navigate("IsSignedIn");
         }
       })
