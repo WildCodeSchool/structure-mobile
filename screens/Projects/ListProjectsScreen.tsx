@@ -85,6 +85,7 @@ export default function ProjectsScreen() {
                 title={item.title}
                 subject={item.subject}
                 createdAt={item.createdAt}
+                tickets={item.tickets}
               />
             </TouchableOpacity>
           )}

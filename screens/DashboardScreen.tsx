@@ -67,10 +67,7 @@ export default function DashboardScreen({
   };
 
   useEffect(() => {
-    if (!loading && !loadingTickets) {
-      setProjects(data.projects);
-      setTickets(dataTickets.tickets);
-    }
+    handleRefresh();
   }, []);
 
   const projectsList = () => {
@@ -113,13 +110,13 @@ export default function DashboardScreen({
   };
 
   const ticketsList = () => {
-    if (error)
+    if (errorTickets)
       return (
         <View>
           <Text>Erreur lors du chargement des tickets...</Text>
         </View>
       );
-    if (tickets.length === 0)
+    if (dataTickets.length === 0)
       return <Text>Vous n'avez pas de ticket pour le moment !</Text>;
     else
       return (
@@ -176,7 +173,7 @@ export default function DashboardScreen({
       </View>
       <View>
         <Text style={Style.h2}>Mes tickets</Text>
-        {!loading ? (
+        {!loadingTickets ? (
           ticketsList()
         ) : (
           <View>

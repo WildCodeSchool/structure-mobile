@@ -11,12 +11,13 @@ export default function ProjectCard(project: Project, ticket: Ticket) {
 /*   const numberTicket = project.tickets?.filter(
     (ticket) => ticket.status
   ).length; */
-  let numberTicket = 0;
-  for(let i = 0; i < project.tickets.length; i++){
-    numberTicket += 1;
+  let numberOfTickets = 0;
+  for(let i = 0; i < project.tickets.length; i++) {
+    numberOfTickets += 1;
   }
-  console.log(numberTicket);
-  const tickets = numberTicket === 0 || numberTicket === 1 ? "Ticket" : `Tickets`;
+
+  const tickets = numberOfTickets === 0 || numberOfTickets === 1 ? "Ticket" : `Tickets`;
+  
   return (
     <View
       style={[
@@ -31,7 +32,7 @@ export default function ProjectCard(project: Project, ticket: Ticket) {
           { justifyContent: "space-between", alignItems: "center" },
         ]}
       >
-        <Text style={[Style.text, { color: Colors.blueGray }]}>{tickets}: {numberTicket}</Text>
+        <Text style={[Style.text, { color: Colors.blueGray }]}>{tickets}: {numberOfTickets}</Text>
         <AntDesign name="arrowright" size={24} color={Colors.gray} />
       </View>
       <Text style={[Style.h3, { color: Colors.blue, marginBottom: 5 }]}>

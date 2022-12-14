@@ -47,9 +47,7 @@ export default function Projects() {
   };
 
   useEffect(() => {
-    if (!loading) {
-      setProjects(data.projects);
-    }
+    handleRefresh();
   }, []);
 
   if (loading)
@@ -97,6 +95,7 @@ export default function Projects() {
             title={item.title}
             subject={item.subject}
             createdAt={item.createdAt}
+            tickets={item.tickets}
           />
         </TouchableOpacity>
       )}
