@@ -28,7 +28,7 @@ export default function Projects() {
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
-      setProjects(data?.projects ?? []);
+      setProjects(data.projects);
     },
   });
 
@@ -48,9 +48,9 @@ export default function Projects() {
 
   useEffect(() => {
     if (!loading) {
-      setProjects(data?.projects ?? []);
+      setProjects(data.projects);
     }
-  }, [loading]);
+  }, []);
 
   if (loading)
     return (

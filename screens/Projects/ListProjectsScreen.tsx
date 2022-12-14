@@ -46,7 +46,7 @@ export default function ProjectsScreen() {
     if (!loading) {
       setProjects(data.projects);
     }
-  }, [loading]);
+  }, []);
 
   const projectList = () => {
     if (error)

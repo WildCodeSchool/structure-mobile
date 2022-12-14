@@ -69,7 +69,7 @@ export default function DashboardScreen({
     if (!loading && !loadingTickets) {
       setProjects(data.projects, dataTickets.tickets);
     }
-  }, [loading, loadingTickets]);
+  }, []);
 
   const projectsList = () => {
     if (error)
