@@ -56,7 +56,7 @@ export default function TicketCard(ticket: Ticket) {
             {formatDate(ticket.createdAt)}
           </Text>
         </View>
-        <Text style={Style.priority}>HAUTE</Text>
+        <Text style={Style.priority}>{ticket.priority}</Text>
       </View>
     </TouchableOpacity>
   );

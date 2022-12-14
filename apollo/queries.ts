@@ -9,6 +9,7 @@ export const GET_TICKETS = gql`
       description
       status
       createdAt
+      priority
     }
   }
 `;
