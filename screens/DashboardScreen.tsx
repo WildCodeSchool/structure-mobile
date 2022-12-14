@@ -4,7 +4,7 @@ import Style from "../style/Style";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Role, RootStackScreenProps, Ticket } from "../types";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { RefreshControl, ScrollView, TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
@@ -81,31 +81,28 @@ export default function DashboardScreen({
       return <Text>Vous n'avez pas de projet pour le moment !</Text>;
     else
       return (
-        <FlatList
-          data={projects}
-          horizontal={true}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Project_details", {
-                  projectId: item.id,
-                })
-              }
-            >
-              <ProjectCard
-                id={item.id}
-                tickets={item.tickets}
-                title={item.title}
-                subject={item.subject}
-                createdAt={item.createdAt}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        <SafeAreaView>
+          <ScrollView horizontal>
+            {projects.map((project, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() =>
+                  navigation.navigate("Project_details", {
+                    projectId: project.id,
+                  })
+                }
+              >
+                <ProjectCard
+                  id={project.id}
+                  tickets={project.tickets}
+                  title={project.title}
+                  subject={project.subject}
+                  createdAt={project.createdAt}
+                />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </SafeAreaView>
       );
   };
 
@@ -120,68 +117,68 @@ export default function DashboardScreen({
       return <Text>Vous n'avez pas de ticket pour le moment !</Text>;
     else
       return (
-        <View>
-          <FlatList
-            data={tickets}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.id.toString()}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            renderItem={({ item }) => (
-              <TicketCard
-                id={item.id}
-                title={item.title}
-                description={item.description}
-                createdAt={item.createdAt}
-                labels={item.labels}
-              />
-            )}
-          />
-          <View style={{ height: 100 }}></View>
-        </View>
+        <ScrollView>
+          {tickets.map((ticket, index) => (
+            <TicketCard
+              key={index}
+              id={ticket.id}
+              title={ticket.title}
+              createdAt={ticket.createdAt}
+              status={ticket.status}
+              project={ticket.project}
+            />
+          ))}
+        </ScrollView>
       );
   };
 
   return (
-    <ScrollView
-      style={[
-        Style.flexColumnNoWrap,
-        {
-          padding: Sizes.semi,
-          paddingTop: Sizes.full,
-        },
-      ]}
-    >
-      <View>
-        <Text style={Style.h1}>Bonjour {authedUser?.firstname} ,</Text>
-        <Text
-          style={[Style.text, { fontSize: Sizes.fontH3, marginBottom: 15 }]}
-        >
-          Voici tes taches en cours...
-        </Text>
-      </View>
-      <View style={[{ marginVertical: 25 }]}>
-        <Text style={Style.h2}>Mes projets</Text>
+    <SafeAreaView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+        nestedScrollEnabled={true}
+        style={[
+          Style.flexColumnNoWrap,
+          {
+            padding: Sizes.semi,
+            paddingTop: Sizes.full,
+            flexGrow: 1,
+          },
+        ]}
+      >
+        <View>
+          <Text style={Style.h1}>Bonjour {authedUser?.firstname} ,</Text>
+          <Text
+            style={[Style.text, { fontSize: Sizes.fontH3, marginBottom: 15 }]}
+          >
+            Voici tes tâches en cours...
+          </Text>
+        </View>
+        <View style={[{ marginVertical: 25 }]}>
+          <Text style={Style.h2}>Mes projets</Text>
 
-        {!loading ? (
-          projectsList()
-        ) : (
-          <View>
-            <ActivityIndicator size="large" color={Colors.green} />
-          </View>
-        )}
-      </View>
-      <View>
-        <Text style={Style.h2}>Mes tickets</Text>
-        {!loadingTickets ? (
-          ticketsList()
-        ) : (
-          <View>
-            <ActivityIndicator size="large" color={Colors.green} />
-          </View>
-        )}
-      </View>
-      <View />
-    </ScrollView>
+          {!loading ? (
+            projectsList()
+          ) : (
+            <View>
+              <ActivityIndicator size="large" color={Colors.green} />
+            </View>
+          )}
+        </View>
+        <View>
+          <Text style={Style.h2}>Mes tickets</Text>
+          {!loadingTickets ? (
+            ticketsList()
+          ) : (
+            <View>
+              <ActivityIndicator size="large" color={Colors.green} />
+            </View>
+          )}
+        </View>
+        <View />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
