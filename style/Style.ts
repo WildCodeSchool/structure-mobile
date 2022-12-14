@@ -51,12 +51,22 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: Sizes.semi,
     marginBottom: Sizes.semi,
-    height: 60,
+    height: 80,
   },
 
   header: {
     fontSize: Sizes.fontH3,
     fontFamily: Fonts.montserratBold,
+  },
+
+  priority: {
+    backgroundColor: Colors.green,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    color: Colors.white,
+    fontFamily: Fonts.robotoBold,
+    letterSpacing: 1,
   },
   //text
   h1: {
@@ -69,8 +79,13 @@ export default StyleSheet.create({
     fontSize: Sizes.fontH2,
     marginBottom: Sizes.semi,
   },
-  h3: { fontFamily: Fonts.robotoBold, fontSize: Sizes.fontH3 },
-  text: { fontFamily: Fonts.robotoLight, fontSize: 14 },
+  h3: {
+    fontFamily: Fonts.robotoBold,
+    fontSize: Sizes.fontH3,
+    color: Colors.blue,
+  },
+  text: { fontFamily: Fonts.robotoLight, fontSize: 14, lineHeight: 18 },
+  textBold: { fontFamily: Fonts.robotoBold, fontSize: 16, lineHeight: 21 },
   errorText: {
     color: Colors.rose,
     fontFamily: Fonts.robotoLight,

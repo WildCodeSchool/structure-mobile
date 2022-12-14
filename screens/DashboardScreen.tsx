@@ -4,7 +4,7 @@ import Style from "../style/Style";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Role, RootStackScreenProps, Ticket } from "../types";
-import { TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
@@ -23,6 +23,7 @@ import ProjectCard from "../components/Project/ProjectCard";
 import { Project } from "../types";
 import { UserInterfaceIdiom } from "expo-constants";
 import { useGuardByRoles } from "../hooks/useGuardByRoles";
+import TicketCard from "../components/Ticket/TicketCard";
 
 export default function DashboardScreen({
   navigation,
@@ -67,7 +68,8 @@ export default function DashboardScreen({
 
   useEffect(() => {
     if (!loading && !loadingTickets) {
-      setProjects(data.projects, dataTickets.tickets);
+      setProjects(data.projects);
+      setTickets(dataTickets.tickets);
     }
   }, []);
 
@@ -94,20 +96,12 @@ export default function DashboardScreen({
               onPress={() =>
                 navigation.navigate("Project_details", {
                   projectId: item.id,
-                  title: item.title,
-                  subject: item.subject,
-                  code: item.code,
-                  createdAt: item.createdAt,
-                  updatedAt: item.updatedAt,
-                  tickets: item.tickets,
-                  members: item.members,
-                  user_author_project: item.user_author_project,
-                  user_author_project_id: item.user_author_project_id,
                 })
               }
             >
               <ProjectCard
                 id={item.id}
+                tickets={item.tickets}
                 title={item.title}
                 subject={item.subject}
                 createdAt={item.createdAt}
@@ -118,14 +112,46 @@ export default function DashboardScreen({
       );
   };
 
+  const ticketsList = () => {
+    if (error)
+      return (
+        <View>
+          <Text>Erreur lors du chargement des tickets...</Text>
+        </View>
+      );
+    if (tickets.length === 0)
+      return <Text>Vous n'avez pas de ticket pour le moment !</Text>;
+    else
+      return (
+        <View>
+          <FlatList
+            data={tickets}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item.id.toString()}
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            renderItem={({ item }) => (
+              <TicketCard
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                createdAt={item.createdAt}
+                labels={item.labels}
+              />
+            )}
+          />
+          <View style={{ height: 100 }}></View>
+        </View>
+      );
+  };
+
   return (
-    <View
+    <ScrollView
       style={[
         Style.flexColumnNoWrap,
         {
           padding: Sizes.semi,
           paddingTop: Sizes.full,
-          flex: 1,
         },
       ]}
     >
@@ -150,18 +176,15 @@ export default function DashboardScreen({
       </View>
       <View>
         <Text style={Style.h2}>Mes tickets</Text>
-
-        <TouchableOpacity
-          style={[
-            Style.ticketContainer,
-            { backgroundColor: Colors[colorScheme].backgroundCard },
-          ]}
-          onPress={() => navigation.navigate("Ticket_details")}
-        >
-          <Text>Détail du ticket</Text>
-        </TouchableOpacity>
+        {!loading ? (
+          ticketsList()
+        ) : (
+          <View>
+            <ActivityIndicator size="large" color={Colors.green} />
+          </View>
+        )}
       </View>
       <View />
-    </View>
+    </ScrollView>
   );
 }

@@ -128,13 +128,13 @@ export interface Project {
   id: number;
   title: string;
   subject: string;
-  code: string;
+  code?: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   tickets: Ticket[];
-  members: User[];
-  user_author_project: User;
-  user_author_project_id: number;
+  members?: User[];
+  user_author_project?: User;
+  user_author_project_id?: number;
 }
 
 export interface Label {
