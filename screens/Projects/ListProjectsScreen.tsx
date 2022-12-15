@@ -24,7 +24,7 @@ export default function ProjectsScreen() {
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
-      setProjects(data.projects);
+      setProjects(data?.projects);
     },
   });
 
@@ -48,7 +48,7 @@ export default function ProjectsScreen() {
   }, []);
 
   const projectList = () => {
-    if (loading){
+    if (loading) {
       return (
         <View>
           <Text>Chargement des projets...</Text>
@@ -61,12 +61,12 @@ export default function ProjectsScreen() {
           <Text>Erreur lors du chargement des projets...</Text>
         </View>
       );
-    if (projects.length === 0)
+    if (data.projects.length === 0)
       return <Text>Vous n'avez pas de projet pour le moment.</Text>;
     else
       return (
         <FlatList
-          data={projects}
+          data={data.projects}
           keyExtractor={(item) => item.id.toString()}
           refreshing={refreshing}
           onRefresh={() => refetch()}
