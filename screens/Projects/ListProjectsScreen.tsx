@@ -24,7 +24,7 @@ export default function ProjectsScreen() {
 
   const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
     onCompleted: (data) => {
-      setProjects(data.projects);
+      setProjects(data?.projects);
     },
   });
 
@@ -44,7 +44,7 @@ export default function ProjectsScreen() {
 
   useEffect(() => {
     handleRefresh();
-    setProjects(data.projects);
+    console.log(data?.projects)
   }, []);
 
   const projectList = () => {
@@ -66,7 +66,7 @@ export default function ProjectsScreen() {
     else
       return (
         <FlatList
-          data={projects}
+          data={data?.projects}
           keyExtractor={(item) => item.id.toString()}
           refreshing={refreshing}
           onRefresh={() => refetch()}
