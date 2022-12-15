@@ -1,14 +1,24 @@
-import { Text, Button } from "../components/Themed";
+import { Text } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Style from "../style/Style";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Role, RootStackScreenProps, Ticket } from "../types";
-import { RefreshControl, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 import Projects from "../components/Project/Projects";
 import Sizes from "../constants/Sizes";
-import { GET_ME, GET_PROJECTS, GET_TICKETS } from "../apollo/queries";
+import {
+  GET_ME,
+  GET_PROJECTS,
+  GET_PROJECTS_WHERE_USER_IS_MEMBER,
+  GET_TICKETS,
+} from "../apollo/queries";
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,7 +27,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import ProjectCard from "../components/Project/ProjectCard";
 import { Project } from "../types";
@@ -34,11 +44,7 @@ export default function DashboardScreen({
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
-    onCompleted: (data) => {
-      setProjects(data.projects);
-    },
-  });
+
 
   const {
     data: dataTickets,
@@ -51,14 +57,9 @@ export default function DashboardScreen({
     },
   });
 
-  const {
-    data: getUser,
-    loading: loadingGetUser,
-    error: errorGetUser,
-  } = useQuery(GET_ME);
+
 
   const handleRefresh = async () => {
-    refetch();
     refetchTickets();
     setRefreshing(true);
     setTimeout(() => {
@@ -70,7 +71,7 @@ export default function DashboardScreen({
     handleRefresh();
   }, []);
 
-  const projectsList = () => {
+  /* const projectsList = () => {
     if (error)
       return (
         <View>
@@ -104,7 +105,7 @@ export default function DashboardScreen({
           </ScrollView>
         </SafeAreaView>
       );
-  };
+  }; */
 
   const ticketsList = () => {
     if (errorTickets)
@@ -158,14 +159,7 @@ export default function DashboardScreen({
         </View>
         <View style={[{ marginVertical: 25 }]}>
           <Text style={Style.h2}>Mes projets</Text>
-
-          {!loading ? (
-            projectsList()
-          ) : (
-            <View>
-              <ActivityIndicator size="large" color={Colors.green} />
-            </View>
-          )}
+            <Projects/>
         </View>
         <View>
           <Text style={Style.h2}>Mes tickets</Text>

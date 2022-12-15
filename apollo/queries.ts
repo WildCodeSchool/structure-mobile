@@ -89,6 +89,19 @@ export const GET_PROJECT = gql`
     }
   }
 `;
+
+export const GET_PROJECTS_WHERE_USER_IS_MEMBER = gql`
+  query Query($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    projects {
+      code
+      id
+      title
+    }
+  }
+}
+`;
 //----------- USER ------------
 export const GET_ME = gql`
   query Me {

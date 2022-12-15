@@ -10,8 +10,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { GET_ME, GET_PROJECTS } from '../../apollo/queries';
-import { useQuery } from '@apollo/client';
+import { GET_ME, GET_PROJECTS, GET_PROJECTS_WHERE_USER_IS_MEMBER } from '../../apollo/queries';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import Style from '../../style/Style';
 import navigation from '../../navigation';
 import { useNavigation } from '@react-navigation/native';
@@ -20,23 +20,31 @@ import { Project } from '../../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../../constants/Colors';
 
+import {MeData} from '../../types'
+
 export default function Projects() {
   const navigation = useNavigation();
 
-  const [projects, setProjects] = useState<Project[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const { data, loading, error, refetch } = useQuery(GET_PROJECTS, {
-    onCompleted: (data) => {
-      setProjects(data.projects);
-    },
-  });
+  const [Get_user_projects, { data, loading, error, refetch }] = useLazyQuery(GET_PROJECTS_WHERE_USER_IS_MEMBER);
 
   const {
     data: getUser,
     loading: loadingGetUser,
     error: errorGetUser,
-  } = useQuery(GET_ME);
+  } = useQuery<MeData>(GET_ME, {
+    onCompleted: (data) => {
+      console.log(data.me)
+      Get_user_projects({
+        variables: {
+          where: {
+            id: data.me.id,
+          },
+        },
+      });
+    },
+  });
 
   const handleRefresh = async () => {
     refetch();
@@ -62,12 +70,12 @@ export default function Projects() {
         <Text>Erreur lors du chargement des projets...</Text>
       </View>
     );
-  if (projects.length === 0)
+  if (data.length === 0)
     return <Text>Vous n'avez pas de projet pour l'isntant !</Text>;
 
   return (
     <FlatList
-      data={projects}
+      data={data}
       horizontal={true}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id.toString()}
