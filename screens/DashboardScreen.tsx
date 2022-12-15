@@ -16,7 +16,6 @@ import Sizes from "../constants/Sizes";
 import {
   GET_ME,
   GET_PROJECTS,
-  GET_PROJECTS_WHERE_USER_IS_MEMBER,
   GET_TICKETS,
 } from "../apollo/queries";
 import {
@@ -34,32 +33,16 @@ import { Project } from "../types";
 import { UserInterfaceIdiom } from "expo-constants";
 import { useGuardByRoles } from "../hooks/useGuardByRoles";
 import TicketCard from "../components/Ticket/TicketCard";
+import Tickets from "../components/Ticket/Tickets";
 
 export default function DashboardScreen({
   navigation,
 }: RootStackScreenProps<"Dashboard">) {
   const colorScheme = useColorScheme();
   const { isAllowed, authedUser } = useGuardByRoles([Role.ADMIN, Role.USER]);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
-
-
-  const {
-    data: dataTickets,
-    loading: loadingTickets,
-    error: errorTickets,
-    refetch: refetchTickets,
-  } = useQuery(GET_TICKETS, {
-    onCompleted: (data) => {
-      setTickets(data.tickets);
-    },
-  });
-
-
-
   const handleRefresh = async () => {
-    refetchTickets();
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
@@ -70,43 +53,7 @@ export default function DashboardScreen({
     handleRefresh();
   }, []);
 
-  /* const projectsList = () => {
-    if (error)
-      return (
-        <View>
-          <Text>Erreur lors du chargement des projets...</Text>
-        </View>
-      );
-    if (projects.length === 0)
-      return <Text>Vous n'avez pas de projet pour le moment !</Text>;
-    else
-      return (
-        <SafeAreaView>
-          <ScrollView horizontal>
-            {projects.map((project, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() =>
-                  navigation.navigate("Project_details", {
-                    projectId: project.id,
-                  })
-                }
-              >
-                <ProjectCard
-                  id={project.id}
-                  tickets={project.tickets}
-                  title={project.title}
-                  subject={project.subject}
-                  createdAt={project.createdAt}
-                />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </SafeAreaView>
-      );
-  }; */
-
-  const ticketsList = () => {
+  /* const ticketsList = () => {
     if (errorTickets)
       return (
         <View>
@@ -130,7 +77,7 @@ export default function DashboardScreen({
           ))}
         </ScrollView>
       );
-  };
+  }; */
 
   return (
     <SafeAreaView>
@@ -158,17 +105,11 @@ export default function DashboardScreen({
         </View>
         <View style={[{ marginVertical: 25 }]}>
           <Text style={Style.h2}>Mes projets</Text>
-            <Projects/>
+          <Projects/>
         </View>
         <View>
           <Text style={Style.h2}>Mes tickets</Text>
-          {!loadingTickets ? (
-            ticketsList()
-          ) : (
-            <View>
-              <ActivityIndicator size="large" color={Colors.green} />
-            </View>
-          )}
+          <Tickets/>
         </View>
         <View />
       </ScrollView>

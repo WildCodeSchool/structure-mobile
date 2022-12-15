@@ -43,6 +43,7 @@ export const GET_TICKET = gql`
   }
 `;
 
+
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
   query Projects {

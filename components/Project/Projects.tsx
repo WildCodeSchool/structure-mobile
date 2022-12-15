@@ -25,9 +25,13 @@ import {MeData} from '../../types'
 export default function Projects() {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [projects, setProjects] = useState<Project[]>([]);
+
   const [Get_user_projects, { data, loading, error, refetch }] = useLazyQuery(GET_ALL_USER_PROJECTS);
 
-  //let allProjects = data.user.projects.concat(data.user.projects_author);
+  let projectsUserIsMemberOf = data?.user?.projects ?? []
+  let projectsUserCreated = data?.user?.projects_author ?? [];
+  let allUserProjects = projectsUserIsMemberOf.concat(projectsUserCreated)
 
 
   const {
@@ -57,8 +61,8 @@ export default function Projects() {
 
   useEffect(() => {
     handleRefresh();
-    console.log(data)
-    //console.log(data.user.projects_author)
+    console.log('projects', projects);
+    setProjects(allUserProjects);
   }, []);
 
   if (loading)
@@ -78,7 +82,7 @@ export default function Projects() {
  */
   return (
     <FlatList
-      data={data}
+      data={allUserProjects}
       horizontal={true}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id.toString()}

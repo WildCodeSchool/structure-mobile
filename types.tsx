@@ -30,7 +30,9 @@ export type RootStackParamList = {
   NotFound: undefined;
   Tickets_list: undefined;
   Create_ticket: undefined;
-  Ticket_details: undefined;
+  Ticket_details: {
+    ticketId: number;
+  };
   Projects_list: undefined;
   Create_project: undefined;
   Project_details: {
