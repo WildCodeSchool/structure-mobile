@@ -40,7 +40,6 @@ export default function DashboardScreen({
 }: RootStackScreenProps<"Dashboard">) {
   const colorScheme = useColorScheme();
   const { isAllowed, authedUser } = useGuardByRoles([Role.ADMIN, Role.USER]);
-  const [projects, setProjects] = useState<Project[]>([]);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 

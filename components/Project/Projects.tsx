@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { GET_ME, GET_PROJECTS, GET_PROJECTS_WHERE_USER_IS_MEMBER } from '../../apollo/queries';
+import { GET_ME, GET_PROJECTS, GET_ALL_USER_PROJECTS } from '../../apollo/queries';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import Style from '../../style/Style';
 import navigation from '../../navigation';
@@ -24,10 +24,11 @@ import {MeData} from '../../types'
 
 export default function Projects() {
   const navigation = useNavigation();
-
   const [refreshing, setRefreshing] = useState(false);
+  const [Get_user_projects, { data, loading, error, refetch }] = useLazyQuery(GET_ALL_USER_PROJECTS);
 
-  const [Get_user_projects, { data, loading, error, refetch }] = useLazyQuery(GET_PROJECTS_WHERE_USER_IS_MEMBER);
+  //let allProjects = data.user.projects.concat(data.user.projects_author);
+
 
   const {
     data: getUser,
@@ -35,7 +36,7 @@ export default function Projects() {
     error: errorGetUser,
   } = useQuery<MeData>(GET_ME, {
     onCompleted: (data) => {
-      console.log(data.me)
+      //console.log(data.me)
       Get_user_projects({
         variables: {
           where: {
@@ -56,6 +57,8 @@ export default function Projects() {
 
   useEffect(() => {
     handleRefresh();
+    console.log(data)
+    //console.log(data.user.projects_author)
   }, []);
 
   if (loading)
@@ -70,9 +73,9 @@ export default function Projects() {
         <Text>Erreur lors du chargement des projets...</Text>
       </View>
     );
-  if (data.length === 0)
-    return <Text>Vous n'avez pas de projet pour l'isntant !</Text>;
-
+  /* if (data.length === 0)
+    return <Text>Vous n'avez pas de projet pour l'instant !</Text>;
+ */
   return (
     <FlatList
       data={data}
@@ -86,15 +89,7 @@ export default function Projects() {
           onPress={() =>
             navigation.navigate('Project_details', {
               projectId: item.id,
-              title: item.title,
-              subject: item.subject,
-              code: item.code,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-              tickets: item.tickets,
-              members: item.members,
-              user_author_project: item.user_author_project,
-              user_author_project_id: item.user_author_project_id,
+              
             })
           }
         >

@@ -90,14 +90,26 @@ export const GET_PROJECT = gql`
   }
 `;
 
-export const GET_PROJECTS_WHERE_USER_IS_MEMBER = gql`
+export const GET_ALL_USER_PROJECTS = gql`
   query Query($where: UserWhereUniqueInput!) {
-  user(where: $where) {
-    id
-    projects {
-      code
+    user(where: $where) {
+      projects { #modifier nom par projects_member
       id
       title
+      subject
+      createdAt
+      tickets {
+        id
+      }
+    }
+    projects_author {
+      id
+      title
+      subject
+      createdAt
+      tickets {
+        id
+      }
     }
   }
 }
