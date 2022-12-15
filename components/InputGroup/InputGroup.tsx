@@ -45,7 +45,7 @@ export const InputGroup = <T extends FieldValues>(
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            secureTextEntry={props.field === "password"}
+            secureTextEntry={props.field === "password"} 
           />
         )}
       />
