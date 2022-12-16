@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,26 +9,27 @@ import {
   FlatList,
   ActivityIndicator,
   ScrollView,
-} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { GET_ME, GET_PROJECTS, GET_TICKETS } from '../../apollo/queries';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import Style from '../../style/Style';
-import navigation from '../../navigation';
-import { useNavigation } from '@react-navigation/native';
-import { Ticket } from '../../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Colors from '../../constants/Colors';
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { GET_ME, GET_PROJECTS, GET_TICKETS } from "../../apollo/queries";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import Style from "../../style/Style";
+import navigation from "../../navigation";
+import { useNavigation } from "@react-navigation/native";
+import { Ticket } from "../../types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Colors from "../../constants/Colors";
 
-import {MeData} from '../../types'
-import TicketCard from './TicketCard';
+import { MeData } from "../../types";
+import TicketCard from "./TicketCard";
 
 export default function Projects() {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [tickets, setTickets] = useState<Ticket[]>([]);
 
-  const [Get_user_tickets, { data, loading, error, refetch }] = useLazyQuery(GET_TICKETS);
+  const [Get_user_tickets, { data, loading, error, refetch }] =
+    useLazyQuery(GET_TICKETS);
   const dataTickets = data?.tickets ?? [];
 
   const {
@@ -52,14 +53,14 @@ export default function Projects() {
 
   useEffect(() => {
     handleRefresh();
-    console.log('tickets', dataTickets);
+    console.log("tickets", dataTickets);
     setTickets(tickets);
   }, []);
 
   if (loading)
     return (
       <View>
-        <ActivityIndicator size='large' color={Colors.green} />
+        <ActivityIndicator size="large" color={Colors.green} />
       </View>
     );
   if (error)
@@ -71,18 +72,19 @@ export default function Projects() {
   /* if (data.length === 0)
     return <Text>Vous n'avez pas de projet pour l'instant !</Text>;
  */
-    return (
-      <ScrollView>
-        {dataTickets.map((ticket, index) => (
-          <TicketCard
-            key={index}
-            id={ticket.id}
-            title={ticket.title}
-            createdAt={ticket.createdAt}
-            status={ticket.status}
-            project={ticket.project}
-          />
-        ))}
-      </ScrollView>
-    );
+  return (
+    <ScrollView>
+      {dataTickets.map((ticket, index) => (
+        <TicketCard
+          key={index}
+          id={ticket.id}
+          title={ticket.title}
+          createdAt={ticket.createdAt}
+          status={ticket.status}
+          project={ticket.project}
+          priority={ticket.priority}
+        />
+      ))}
+    </ScrollView>
+  );
 }
