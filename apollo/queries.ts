@@ -44,6 +44,7 @@ export const GET_TICKET = gql`
   }
 `;
 
+
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
   query Projects {
@@ -89,6 +90,31 @@ export const GET_PROJECT = gql`
       }
     }
   }
+`;
+
+export const GET_ALL_USER_PROJECTS = gql`
+  query Query($where: UserWhereUniqueInput!) {
+    user(where: $where) {
+      projects { #modifier nom par projects_member
+      id
+      title
+      subject
+      createdAt
+      tickets {
+        id
+      }
+    }
+    projects_author {
+      id
+      title
+      subject
+      createdAt
+      tickets {
+        id
+      }
+    }
+  }
+}
 `;
 //----------- USER ------------
 export const GET_ME = gql`
