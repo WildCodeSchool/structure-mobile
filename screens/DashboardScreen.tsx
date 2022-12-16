@@ -71,7 +71,7 @@ export default function DashboardScreen({
               id={ticket.id}
               title={ticket.title}
               createdAt={ticket.createdAt}
-              status={ticket.status}
+              priority={ticket.priority}
               project={ticket.project}
             />
           ))}
