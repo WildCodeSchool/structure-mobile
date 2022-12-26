@@ -70,7 +70,7 @@ export default function Projects() {
       </View>
     );
   if (dataTickets.length === 0)
-    return <Text>Vous n'avez pas de tickets pour l'instant !</Text>;
+    return <Text>Pas de tickets pour l'instant !</Text>;
  
   return (
     <ScrollView>

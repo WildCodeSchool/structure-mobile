@@ -53,32 +53,6 @@ export default function DashboardScreen({
     handleRefresh();
   }, []);
 
-  /* const ticketsList = () => {
-    if (errorTickets)
-      return (
-        <View>
-          <Text>Erreur lors du chargement des tickets...</Text>
-        </View>
-      );
-    if (dataTickets.length === 0)
-      return <Text>Vous n'avez pas de ticket pour le moment !</Text>;
-    else
-      return (
-        <ScrollView>
-          {tickets.map((ticket, index) => (
-            <TicketCard
-              key={index}
-              id={ticket.id}
-              title={ticket.title}
-              createdAt={ticket.createdAt}
-              priority={ticket.priority}
-              project={ticket.project}
-            />
-          ))}
-        </ScrollView>
-      );
-  }; */
-
   return (
     <SafeAreaView>
       <ScrollView
