@@ -69,14 +69,14 @@ export default function Projects() {
         <Text>Erreur lors du chargement des tickets...</Text>
       </View>
     );
-  /* if (data.length === 0)
-    return <Text>Vous n'avez pas de projet pour l'instant !</Text>;
- */
+  if (dataTickets.length === 0)
+    return <Text>Vous n'avez pas de tickets pour l'instant !</Text>;
+ 
   return (
     <ScrollView>
-      {dataTickets.map((ticket, index) => (
+      {dataTickets.map((ticket: Ticket) => (
         <TicketCard
-          key={index}
+          key={ticket.id}
           id={ticket.id}
           title={ticket.title}
           createdAt={ticket.createdAt}
