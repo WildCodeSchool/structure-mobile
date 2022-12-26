@@ -1,20 +1,19 @@
-import Projects from "../../components/Project/Projects";
-import { Text, View } from "../../components/Themed";
-import { useQuery } from "@apollo/client";
-import { useNavigation } from "@react-navigation/native";
-import Style from "../../style/Style";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
   Dimensions,
 } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { Text, View } from "../../components/Themed";
+import { useNavigation } from "@react-navigation/native";
 import { GET_ME, GET_PROJECTS } from "../../apollo/queries";
 import ProjectCard from "../../components/Project/ProjectCard";
 import { Project } from "../../types";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import Sizes from "../../constants/Sizes";
+import Style from "../../style/Style";
 import { AntDesign } from "@expo/vector-icons";
 
 export default function ProjectsScreen() {

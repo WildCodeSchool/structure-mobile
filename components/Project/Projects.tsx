@@ -77,9 +77,9 @@ export default function Projects() {
         <Text>Erreur lors du chargement des projets...</Text>
       </View>
     );
-  /* if (data.length === 0)
-    return <Text>Vous n'avez pas de projet pour l'instant !</Text>;
- */
+  if (allUserProjects.length === 0 )
+    return <Text>Pas de projets pour l'instant !</Text>;
+ 
   return (
     <FlatList
       data={allUserProjects}
