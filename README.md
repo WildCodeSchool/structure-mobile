@@ -1,7 +1,7 @@
 # Welcome to Structure Mobile!
 
 Hi! If you need any help to organize the tasks on your projects, you can use :  **Structure !**
-It let you create projects and tickets who are assigned  to members of your team project.
+You can create a projet, and assign tickets to the members of the project.
 
 # Project status
 
@@ -10,7 +10,9 @@ It let you create projects and tickets who are assigned  to members of your team
 ## Pre-requisites
 ### In order to make this application work, you need to connect it to a database.
  1. Clone the backend repository project from [Structure's web application](https://github.com/WildCodeSchool/2203-wns-etchebest-tfs-back.git)
- 2. Start the application for the first time `docker compose -f docker-compose.yml up --build` or if you already built docker you can use `docker compose up`
+ 2. At the root of the directory, where the docker-compose.yml file is located, start the application:
+- for the first time using the command `docker compose -f docker-compose.yml up --build` 
+- if you've already built the application image you can use `docker compose up`
 
 ## Start the mobile application
 
