@@ -15,7 +15,7 @@ export const GET_TICKETS = gql`
 `;
 
 export const GET_TICKET = gql`
-  query Query($where: TicketWhereUniqueInput!) {
+  query Ticket($where: TicketWhereUniqueInput!) {
     ticket(where: $where) {
       id
       title
@@ -68,7 +68,7 @@ export const GET_PROJECTS = gql`
 `;
 
 export const GET_PROJECT = gql`
-  query GetProject($where: ProjectWhereUniqueInput!) {
+  query Project($where: ProjectWhereUniqueInput!) {
     project(where: $where) {
       id
       code
@@ -93,7 +93,7 @@ export const GET_PROJECT = gql`
 `;
 
 export const GET_ALL_USER_PROJECTS = gql`
-  query Query($where: UserWhereUniqueInput!) {
+  query Projects($where: UserWhereUniqueInput!) {
     user(where: $where) {
       projects { #modifier nom par projects_member
       id
