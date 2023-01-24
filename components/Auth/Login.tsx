@@ -9,45 +9,44 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { RootTabParamList, AuthContextType, User, ValidatorForm } from "../../types";
-
+import {
+  RootTabParamList,
+  AuthContextType,
+  User,
+  ValidatorForm,
+} from "../../types";
 
 type ILoginFormData = Pick<User, "email" | "password">;
-type ValidatorLogin = ValidatorForm<keyof ILoginFormData>
-
+type ValidatorLogin = ValidatorForm<keyof ILoginFormData>;
 
 export default function Login() {
   const navigation = useNavigation<RootTabParamList>();
 
-	const validators: ValidatorLogin = {
-		email: {
-			required: {
-				value: true,
-				message: "L'email est requis"
-			},
-			pattern: {
-				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-				message: 'Adresse email non valide'
-			}
-		},
-		password: {
-			required: {
-				value: true,
-				message: 'Le mot de passe est requis'
-			}
-		}
-	}
-
+  const validators: ValidatorLogin = {
+    email: {
+      required: {
+        value: true,
+        message: "L'email est requis",
+      },
+      pattern: {
+        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        message: "Adresse email non valide",
+      },
+    },
+    password: {
+      required: {
+        value: true,
+        message: "Le mot de passe est requis",
+      },
+    },
+  };
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: { email: "", password: "" },
-  });
-  const [mutateLogin, { data, loading, error: ApolloError }] =
-    useMutation(LOGIN_MUTATION);
+  } = useForm({ defaultValues: { email: "", password: "" } });
+  const [mutateLogin] = useMutation(LOGIN_MUTATION);
   const { setSignedIn } = useContext(AuthContext) as AuthContextType;
   const onSubmit: SubmitHandler<ILoginFormData> = (payload) => {
     mutateLogin({
@@ -55,14 +54,17 @@ export default function Login() {
         data: payload,
       },
     })
-      .then((data) => {
+      .then(async (data) => {
         if (data) {
-          AsyncStorage.setItem("token", data.data.login);
-          AsyncStorage.setItem("userId", data.data.id);
-          AsyncStorage.setItem("name", data.data.firstname);
-
-          setSignedIn(true);
-          navigation.navigate("IsSignedIn");
+          try {
+            await AsyncStorage.setItem("token", data.data.login);
+            await AsyncStorage.setItem("userId", data.data.id);
+            await AsyncStorage.setItem("name", data.data.firstname);
+            setSignedIn(true);
+            navigation.navigate("IsSignedIn");
+          } catch (err) {
+            throw new Error("Impossible d'ajouter le token dans le storage");
+          }
         }
       })
       .catch((err) => console.log(err));
@@ -70,7 +72,7 @@ export default function Login() {
 
   return (
     <View>
-   			<InputGroup<ILoginFormData>
+      <InputGroup<ILoginFormData>
         Controller={Controller}
         control={control}
         field="email"
